@@ -17,6 +17,8 @@
 //  directly access denied
  defined('ABSPATH') || exit;
 
+ use UniForum\Inc\Classes\Shortcode;
+
  if ( file_exists( dirname(__FILE__) . '/inc/autoload.php' ) ){
     require_once dirname(__FILE__) . '/inc/autoload.php';
  }
@@ -38,6 +40,10 @@
 
         // register custom post type called forum
         add_action( 'init', [ $this, 'register_forum_post_type' ] );
+
+        // exicute the Shortcode class
+        new Shortcode;
+        
     }
 
     /**
