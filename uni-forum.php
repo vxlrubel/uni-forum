@@ -47,6 +47,7 @@
         // exicute the Shortcode class
         new Shortcode;
 
+        // register new user
         add_action( 'admin_post_uf_user_registration', [ $this, 'register_new_user' ] );
 
         add_action( 'admin_post_nopriv_uf_user_registration', [ $this, 'register_new_user' ] );
