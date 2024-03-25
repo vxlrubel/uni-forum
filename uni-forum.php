@@ -30,6 +30,9 @@
     private static $version = '1.0';
 
     public function __construct(){
+
+        // define constant
+        $this->constants();
         // register text domain
         add_action( 'plugins_loaded', [ $this, 'register_text_domain' ] );
 
@@ -90,6 +93,18 @@
             false,
             dirname( plugin_basename( __FILE__ ) ) . trailingslashit( '/lang' )
         );
+    }
+
+    /**
+     * define constant
+     *
+     * @return void
+     */
+    public function constants(){
+        define( 'UF_VERSION', self::$version );
+        define( 'UF_ASSETS', trailingslashit( plugins_url( 'assets', __FILE__ ) ) );
+        define( 'UF_ASSETS_CSS', trailingslashit( UF_ASSETS . 'css' ) );
+        define( 'UF_ASSETS_JS', trailingslashit( UF_ASSETS . 'js' ) );
     }
 
     /**
