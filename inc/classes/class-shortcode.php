@@ -53,6 +53,7 @@ class Shortcode{
         if ( is_user_logged_in() ) {
             ob_start();
             require_once dirname( __FILE__ ) . '/render-forum-post.php';
+
             return ob_get_clean();
         } else {
             ob_start();
@@ -60,6 +61,7 @@ class Shortcode{
             wp_login_form();
             echo '</div>';
             $login_form = ob_get_clean();
+
             return $login_form;
         }
     }
@@ -72,6 +74,7 @@ class Shortcode{
     public function registration_form(){
         ob_start();
         require_once dirname( __FILE__ ) . '/registration-form.php';
+        
         return ob_get_clean();
     }
 }
