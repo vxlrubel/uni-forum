@@ -29,6 +29,24 @@
     // plugin version
     private static $version = '1.0';
 
+    public function __construct(){
+        // register text domain
+        add_action( 'plugins_loaded', [ $this, 'register_text_domain' ] );
+    }
+
+    /**
+     * register text domain
+     *
+     * @return void
+     */
+    public function register_text_domain(){
+        load_plugin_textdomain( 
+            'uni-forum',
+            false,
+            dirname( plugin_basename( __FILE__ ) ) . trailingslashit( '/lang' )
+        );
+    }
+
     /**
      * create a new instance
      *
