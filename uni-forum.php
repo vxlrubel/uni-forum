@@ -55,6 +55,28 @@
         // hide frontend toolbar when user is logged in
         add_action('plugins_loaded', [ $this, 'toolbar_hidden' ] );
 
+        // WordPress version control notices
+        add_action( 'admin_notices', [ $this, 'wp_version_notice' ] );
+    }
+
+    /**
+     * WordPress version control notice
+     *
+     * @return void
+     */
+    public function wp_version_notice(){
+        global $wp_version;
+        $min_required_version = '5.2';
+
+        if( version_compare( $wp_version, $min_required_version, '<' ) ){
+            $notice = sprintf(
+                __( 'Uni Forum plugin requires WordPress version %1$s or higher to function properly. Please <a href="%2$s">update WordPress</a>.', 'uni-forum' ),
+                $min_required_version,
+                admin_url( 'update-core.php' )
+            );
+
+            printf( '<div class="notice notice-error is-dismissible"><p>%s</p></div>', wp_kses_post( $notice ) );
+        }
     }
 
     /**
