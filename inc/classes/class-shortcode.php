@@ -8,7 +8,31 @@ defined('ABSPATH') || exit;
 class Shortcode{
 
     public function __construct(){
+        // registration form
         add_shortcode( 'uf_registration_form', [ $this, 'registration_form' ]);
+
+        // render forum post
+        add_shortcode( 'uf_render_forum', [ $this, 'render_forum_post' ]);
+    }
+
+    /**
+     * render forum post
+     *
+     * @return void
+     */
+    public function render_forum_post(){
+        if ( is_user_logged_in() ) {
+            ob_start();
+            require_once dirname( __FILE__ ) . '/render-forum-post.php';
+            return ob_get_clean();
+        } else {
+            ob_start();
+            echo '<div class="uf-login-form-parent">';
+            wp_login_form();
+            echo '</div>';
+            $login_form = ob_get_clean();
+            return $login_form;
+        }
     }
 
     /**
