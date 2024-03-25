@@ -41,9 +41,25 @@
         // register custom post type called forum
         add_action( 'init', [ $this, 'register_forum_post_type' ] );
 
+        // update user activity
+        add_action('init', [ $this, 'update_user_activity' ] );
+
         // exicute the Shortcode class
         new Shortcode;
-        
+
+    }
+    
+    /**
+     * update user activity
+     *
+     * @return void
+     */
+    public function update_user_activity(){
+        $user_id = get_current_user_id();
+
+        if ( $user_id ) {
+            update_user_meta( $user_id, 'last_activity', current_time('timestamp') );
+        }
     }
 
     /**
