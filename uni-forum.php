@@ -18,6 +18,7 @@
  defined('ABSPATH') || exit;
 
  use UniForum\Inc\Classes\Shortcode;
+ use UniForum\Inc\Classes\Ajax_Handle;
 
  if ( file_exists( dirname(__FILE__) . '/inc/autoload.php' ) ){
     require_once dirname(__FILE__) . '/inc/autoload.php';
@@ -46,6 +47,9 @@
 
         // exicute the Shortcode class
         new Shortcode;
+
+        // exicute the Ajax_Handle class for handle ajax request
+        new Ajax_Handle;
 
         // register new user
         add_action( 'admin_post_uf_user_registration', [ $this, 'register_new_user' ] );
