@@ -5,6 +5,7 @@ defined('ABSPATH') || exit;
 
 $files = [
     'classes/class-ajax',
+    'classes/class-shortcode',
 ];
 
 foreach ( $files as $file ) {
