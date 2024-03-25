@@ -27,8 +27,7 @@
                     $author_name     = get_the_author_meta( 'display_name', $author_id );
                     $trimmed_content = wp_trim_words( get_the_content( get_the_ID() ), 20 );
                     $comment_count   = get_comments_number( $post_id );
-                    // $active_status   = is_user_online( $author_id ) ? 'active' : 'inactive';
-                    $active_status   ='active';
+                    $active_status   = is_user_online( $author_id ) ? 'active' : 'inactive';
                     ?>
                         <li data-item="<?php echo esc_attr( $post_id ); ?>">
                             <p>
