@@ -1,3 +1,8 @@
+<?php
+// directly access denied
+defined('ABSPATH') || exit;
+?>
+
 <div class="forum-wrap">
     <div class="forum-post">
         <form action="" class="add-new-forum">
