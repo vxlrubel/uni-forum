@@ -47,6 +47,39 @@
         // exicute the Shortcode class
         new Shortcode;
 
+        add_action( 'admin_post_uf_user_registration', [ $this, 'register_new_user' ] );
+
+        add_action( 'admin_post_nopriv_uf_user_registration', [ $this, 'register_new_user' ] );
+
+    }
+
+    /**
+     * register new user
+     *
+     * @return void
+     */
+    public function register_new_user(){
+        if( isset( $_POST['uf_user_email'] ) && isset( $_POST['uf_user_password'] ) ){
+            $user_email    = sanitize_email( $_POST['uf_user_email'] );
+            $user_password = esc_sql( $_POST['uf_user_password'] );
+
+            $user_exists   = email_exists( $user_email );
+            if ( $user_exists ) {
+                wp_redirect( home_url() . '?registration_error=user_exists' );
+                exit;
+            }
+
+            $user_id = wp_create_user( $user_email, $user_password, $user_email, [ 'role' => 'subscriber' ] );
+
+            if( is_wp_error( $user_id ) ){
+                wp_redirect( home_url() . '?registration_error=' . $user_id->get_error_message() );
+                exit;
+            }else{
+                wp_redirect( home_url() . '?registration_success=true' );
+                exit;
+            }
+
+        }
     }
     
     /**
