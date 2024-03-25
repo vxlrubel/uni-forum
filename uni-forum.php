@@ -32,6 +32,51 @@
     public function __construct(){
         // register text domain
         add_action( 'plugins_loaded', [ $this, 'register_text_domain' ] );
+
+        // register custom post type called forum
+        add_action( 'init', [ $this, 'register_forum_post_type' ] );
+    }
+
+    /**
+     * register custom post type called forum
+     *
+     * @return void
+     */
+    public function register_forum_post_type(){
+        $labels = [
+            'name'               => __( 'Forums', 'uni-forum' ),
+            'singular_name'      => __( 'Forum', 'uni-forum' ),
+            'menu_name'          => __( 'Forums', 'uni-forum' ),
+            'name_admin_bar'     => __( 'Forum', 'uni-forum' ),
+            'add_new'            => __( 'Add New', 'uni-forum' ),
+            'add_new_item'       => __( 'Add New Forum', 'uni-forum' ),
+            'new_item'           => __( 'New Forum', 'uni-forum' ),
+            'edit_item'          => __( 'Edit Forum', 'uni-forum' ),
+            'view_item'          => __( 'View Forum', 'uni-forum' ),
+            'all_items'          => __( 'All Forums', 'uni-forum' ),
+            'search_items'       => __( 'Search Forums', 'uni-forum' ),
+            'parent_item_colon'  => __( 'Parent Forums:', 'uni-forum' ),
+            'not_found'          => __( 'No forums found.', 'uni-forum' ),
+            'not_found_in_trash' => __( 'No forums found in Trash.', 'uni-forum' )
+        ];
+
+        $args = [
+            'labels'             => $labels,
+            'public'             => true,
+            'publicly_queryable' => true,
+            'show_ui'            => true,
+            'show_in_menu'       => true,
+            'query_var'          => true,
+            'rewrite'            => [ 'slug' => 'forum' ],
+            'has_archive'        => true,
+            'hierarchical'       => false,
+            'menu_position'      => 20,
+            'menu_icon'          => 'dashicons-buddicons-forums',
+            'supports'           => [ 'title', 'editor', 'author', 'comments' ],
+            'show_in_rest'       => true,
+        ];
+
+        register_post_type( 'forum', $args );
     }
 
     /**
