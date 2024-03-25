@@ -52,6 +52,20 @@
 
         add_action( 'admin_post_nopriv_uf_user_registration', [ $this, 'register_new_user' ] );
 
+        // hide frontend toolbar when user is logged in
+        add_action('plugins_loaded', [ $this, 'toolbar_hidden' ] );
+
+    }
+
+    /**
+     * hide the toolbar from frontend when user is logged in
+     *
+     * @return void
+     */
+    public function toolbar_hidden(){
+        if ( is_user_logged_in() && current_user_can('subscriber') ) {
+            show_admin_bar(false);
+        }
     }
 
     /**
