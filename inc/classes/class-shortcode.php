@@ -17,6 +17,8 @@ class Shortcode{
      * @return void
      */
     public function registration_form(){
-        
+        ob_start();
+        require_once dirname( __FILE__ ) . '/registration-form.php';
+        return ob_get_clean();
     }
 }
