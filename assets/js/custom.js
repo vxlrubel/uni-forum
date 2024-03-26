@@ -9,6 +9,7 @@
             this.fetchForumDataInsidePopupForm();
             this.destroyfetchForumDataInsidePopupForm();
             this.updateForumPostById();
+            this.updateProfileUserData();
         }
 
         addNewForumPosts(){
@@ -201,6 +202,42 @@
                     error     : ( error )=>{
                         console.log( 'Error:', error );
                     },
+                });
+            });
+        }
+
+        updateProfileUserData(){
+            $('.forum-wrap').on('submit', '#profile-edit-form', function(e){
+                e.preventDefault();
+                let _self      = $(this);
+                let id         = _self.find('#user-id').val().trim();
+                let fName      = _self.find('#user-f-name').val().trim();
+                let lName      = _self.find('#user-l-name').val().trim();
+                let buttonText = _self.find('input[type="submit"]').val().trim();
+
+                let data = {
+                    action: 'update_user_profile',
+                    id    : id,
+                    f_name: fName,
+                    l_name: lName
+                }
+                
+                $.ajax({
+                    type      : 'POST',
+                    url       : ajaxUrl,
+                    data      : data,
+                    beforeSend: ()=>{
+                        _self.find('input[type="submit"]').val('Updating...');
+                    },
+                    success: ( response ) => {
+                        if( response ){
+                            _self.siblings('h2.profile-name').html(response.data);
+                            _self.find('input[type="submit"]').val(buttonText);
+                        }
+                    },
+                    error: (error)=>{
+                        console.log( 'error: ', + error );
+                    }
                 });
             });
         }
