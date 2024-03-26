@@ -120,8 +120,16 @@
                 wp_redirect( home_url() . '?registration_error=' . $user_id->get_error_message() );
                 exit;
             }else{
-                wp_redirect( home_url() . '?registration_success=true' );
-                exit;
+                $profile_page = get_page_by_path( 'profile' );
+
+                if ( $profile_page ){
+                    wp_redirect( home_url('/profile?registration_success=true') );
+                    exit;
+                }else{
+                    wp_redirect( home_url() . '?registration_success=true' );
+                    exit;
+                }
+                
             }
 
         }
