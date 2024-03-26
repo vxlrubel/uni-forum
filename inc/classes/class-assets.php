@@ -9,7 +9,7 @@ class Assets{
     public function __construct(){
         
         // register stylesheets
-        add_action( 'wp_enqueue_scripts', [ $this, 'register_style' ] );
+        add_action( 'wp_enqueue_scripts', [ $this, 'register_stylesheets' ] );
     }
 
     /**
@@ -17,8 +17,8 @@ class Assets{
      *
      * @return void
      */
-    public function register_style(){
-        $get_style = $this->get_style();
+    public function register_stylesheets(){
+        $get_style = $this->get_styles();
 
         foreach ( $get_style as $handle => $style ){
             $deps = isset( $style['deps'] ) ? $style['deps'] : '';
@@ -37,7 +37,7 @@ class Assets{
      *
      * @return $stylesheets
      */
-    public function get_style(){
+    public function get_styles(){
         $stylesheets = [
             'uni-forum-style' => [
                 'src' => UF_ASSETS_CSS . 'main.css'
