@@ -120,7 +120,6 @@
                         let res     = response.data;
                         let getForm = getPopupform(res.post_id, res.post_title, res.post_content );
                         $('body').prepend(getForm);
-                        console.log( response.data );
                         _self.text(text)
                     },
                     error     : ( error )=>{
