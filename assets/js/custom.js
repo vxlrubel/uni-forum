@@ -7,6 +7,7 @@
             this.addNewForumPosts();
             this.deleteForumPost();
             this.fetchForumDataInsidePopupForm();
+            this.destroyfetchForumDataInsidePopupForm();
         }
 
         addNewForumPosts(){
@@ -125,6 +126,29 @@
                     error     : ( error )=>{
                         console.log( 'Error:', error );
                     },
+                });
+            });
+        }
+
+        destroyfetchForumDataInsidePopupForm(){
+            $('body').on('click', '[data-close="dismiss"]', function(e){
+                e.preventDefault();
+                let form = $(this).closest('.uf-update-form-parent');
+                form.fadeOut(300, function(e){
+                    form.remove();
+                });
+            });
+
+            doc.on('click', '.uf-update-form-parent', function(e){
+                e.preventDefault();
+                let targetedName = $(this).attr('class');
+                
+                if( e.target.classList.value != targetedName ){
+                    return;
+                }
+
+                $(this).fadeOut(300, ()=>{
+                    $(this).remove();
                 });
             });
         }
