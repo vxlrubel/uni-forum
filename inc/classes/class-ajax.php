@@ -8,11 +8,16 @@ defined('ABSPATH') || exit;
 class Ajax_Handle{
 
     private $add_forum_post = 'add_new_forum_post';
+    private $del_forum_post = 'delete_forum_post';
 
     public function __construct(){
         // add nrw forum post
         add_action("wp_ajax_{$this->add_forum_post}", [ $this, 'add_new_forum_post' ] );
         add_action("wp_ajax_nopriv_{$this->add_forum_post}", [ $this, 'add_new_forum_post' ] );
+
+        // delete forum post
+        add_action("wp_ajax_{$this->del_forum_post}", [ $this, 'delete_forum_post' ] );
+        add_action("wp_ajax_nopriv_{$this->del_forum_post}", [ $this, 'delete_forum_post' ] );
     }
 
     /**
@@ -65,6 +70,31 @@ class Ajax_Handle{
             wp_send_json_success( $response );
         }else{
             wp_send_json_success( 'failed' );
+        }
+    }
+
+    /**
+     * delete forum post
+     *
+     * @return void
+     */
+    public function delete_forum_post(){
+        if ( ! defined('DOING_AJAX') || ! DOING_AJAX ){
+            wp_send_json_error( 'Invalid AJAX request.' );
+        }
+
+        $post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : '';
+
+        if( empty( $post_id ) ){
+            wp_send_json_error( 'Post id not valid.' );
+        }
+
+        $delete_post = wp_delete_post( $post_id, true );
+
+        if( $delete_post ){
+            wp_send_json_success( [ 'status' => '200' ] );
+        }else{
+            wp_send_json_error( 'Error deleting post.' );
         }
     }
 }
