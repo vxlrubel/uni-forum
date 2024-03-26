@@ -72,9 +72,21 @@ class Shortcode{
      * @return void
      */
     public function registration_form(){
-        ob_start();
-        require_once dirname( __FILE__ ) . '/registration-form.php';
-        
-        return ob_get_clean();
+        if( is_user_logged_in() ){
+            $profile_url = home_url( '/profile' );
+            wp_redirect( $profile_url );
+            exit;
+        }else{
+            $profile_page = get_page_by_path( 'profile' );
+            if ( ! $profile_page ){
+                wp_redirect( home_url('/') );
+                exit;
+            }
+
+            ob_start();
+            require_once dirname( __FILE__ ) . '/registration-form.php';
+            
+            return ob_get_clean();
+        }
     }
 }
