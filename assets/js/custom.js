@@ -42,20 +42,7 @@
                     success   : ( response )=>{
                         if( response ){
                             let receivedData = response.data;
-                            let receivedItem = `
-                            <li data-item="${receivedData.id}">
-                                <p>
-                                    <span class="author-name">${receivedData.author}</span>
-                                    <span class="author-status active"></span>
-                                </p>
-                                <h2 class="forum-title">${receivedData.title}</h2>
-                                <p class="text-uf-default">${receivedData.excerpt}</p>
-                                <a href="${receivedData.permalink}" class="permalink">Read More</a>
-                                <a href="javascript:void(0)" class="permalink edit">Edit</a>
-                                <a href="javascript:void(0)" class="permalink delete" >Delete</a>
-                                <span class="uf-comment-count">No comments</span>
-                            </li>
-                            `;
+                            let receivedItem = forumPostStucture(receivedData.id, receivedData.author, receivedData.title, receivedData.excerpt, receivedData.permalink );
                             _self.closest('.forum-post').siblings('.forum-items').prepend( receivedItem);
 
                             // reset form data
@@ -70,8 +57,35 @@
                 });
             });
         }
+
+        
     }
 
+    const forumPostStucture = ( id, author, title, excerpt, url ) => {
+        let htmlElement = `
+        <li data-item="${id}">
+            <div class="forum-header">
+                <div class="author-name">
+                    <span>${author}</span>
+                    <span class="author-status active"></span>
+                </div>
+                <div class="own-post-manage">
+                    <button type="button" class="button edit">Edit</button>
+                    <button type="button" class="button delete">Delete</button>
+                </div>
+            </div>
+            <h2 class="forum-title">${title}</h2>
+            <p class="text-uf-default">${excerpt}</p>
+            <a href="${url}" class="permalink">Read More</a>
+            <div class="forum-footer">
+                <button type="button" class="button like">Like</button>
+                <button type="button" class="button comment">No comments</button>
+            </div>
+        </li>
+        `;
+        return htmlElement;
+    }
+    
     doc.ready(()=>{
         const forum = new UniForum;
         forum.init();
