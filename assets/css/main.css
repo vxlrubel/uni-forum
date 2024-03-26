@@ -1,0 +1,9 @@
+.uf-reset,
+.uf-reset::after,
+.uf-reset::before,
+.uf-reset *,
+.uf-reset *::after,
+.uf-reset *::before{
+    box-sizing: border-box;
+    font-size: 14px;
+}
