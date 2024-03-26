@@ -106,7 +106,6 @@
     border-color: var(--color-uf-primary-hover);
 }
 
-
 /*****************************************************/
 /****************** FORUM PAGE ***********************/
 /*****************************************************/
@@ -319,6 +318,7 @@ textarea.uf-field {
 .uf-button.close:hover{
     background-color: var(--color-uf-red-deep);
 }
+
 /*****************************************************/
 /****************** FORUM PROFILE ********************/
 /*****************************************************/
@@ -343,7 +343,6 @@ textarea.uf-field {
     display: none;
     margin-top: 15px;
 }
-
 .prevent-forum-post-title {
 	text-transform: uppercase;
 	color: var(--color-uf-primary);
