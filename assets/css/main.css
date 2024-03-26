@@ -4,6 +4,6 @@
 .uf-reset *,
 .uf-reset *::after,
 .uf-reset *::before{
-    box-sizing: border-box;
+    box-sizing: border-box !important;
     font-size: 14px;
 }
