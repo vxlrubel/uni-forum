@@ -56,6 +56,7 @@
     padding: 0;
 }
 .uf-reset button,
+.uf-reset input[type="submit"],
 .uf-reset button[type="button"],
 .uf-reset .button{
     display: inline-block;
@@ -66,6 +67,7 @@
     font-size: 13px;
 }
 .uf-reset button:hover,
+.uf-reset input[type="submit"]:hover,
 .uf-reset button[type="button"]:hover,
 .uf-reset .button:hover{
     background-color: var(--color-uf-button-hover) !important;
@@ -300,4 +302,37 @@ textarea.uf-field {
 }
 .uf-button.close:hover{
     background-color: var(--color-uf-red-deep);
+}
+/*****************************************************/
+/****************** FORUM PROFILE ********************/
+/*****************************************************/
+.uf-reset .profile-name {
+	margin: 0 0 15px;
+	text-transform: capitalize;
+	color: var(--color-uf-primary-hover);
+	font-weight: 600;
+	font-size: 16px;
+}
+.uf-reset .link{
+    margin: 15px 0;
+}
+.uf-reset .link a{
+    display: inline-block;
+    text-decoration: none;
+    margin-right: 10px;
+    padding: 5px 15px;
+    border: 1px solid var(--color-uf-border);
+}
+.profile-edit-form input[type="submit"] {
+    color: var(--color-uf-white);
+    background-color: var(--color-uf-primary);
+    border-color: var(--color-uf-primary);
+    padding: 7px 15px;
+}
+.profile-edit-form input[type="submit"]:hover {
+    background-color: var(--color-uf-primary-hover) !important;
+    border-color: var(--color-uf-primary-hover) !important;
+}
+#profile-edit-form{
+    display: none;
 }
