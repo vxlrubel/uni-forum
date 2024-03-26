@@ -6,6 +6,7 @@
         init(){
             this.addNewForumPosts();
             this.deleteForumPost();
+            this.fetchForumDataInsidePopupForm();
         }
 
         addNewForumPosts(){
@@ -95,6 +96,39 @@
                 });
             });
         }
+
+        fetchForumDataInsidePopupForm(){
+            $('.forum-wrap').on('click', 'button.button.edit', function(e){
+                e.preventDefault();
+                let _self   = $( this );
+                let text = _self.text();
+                let id      = parseInt( _self.closest('li').data('item') );
+
+                let data = {
+                    action : 'fetch_forum_post_by_id',
+                    post_id: id
+                }
+                
+                $.ajax({
+                    type      : 'POST',
+                    url       : ajaxUrl,
+                    data      : data,
+                    beforeSend: ()=>{
+                        _self.text('Fetching...');
+                    },
+                    success   : ( response )=>{
+                        let res     = response.data;
+                        let getForm = getPopupform(res.post_id, res.post_title, res.post_content );
+                        $('body').prepend(getForm);
+                        console.log( response.data );
+                        _self.text(text)
+                    },
+                    error     : ( error )=>{
+                        console.log( 'Error:', error );
+                    },
+                });
+            });
+        }
         
     }
 
@@ -121,6 +155,29 @@
         </li>
         `;
         return htmlElement;
+    }
+
+    const getPopupform = ( id, title, content)=>{
+        $html = `
+        <div class="uf-update-form-parent">
+            <form action="javascript:void(0)" class="uf-update-form" data-update-id="${id}">
+                <div class="form-head">
+                    <h3>Forum Post Update</h3>
+                    <span data-close="dismiss">×</span>
+                </div>
+                <div class="form-body">
+                    <input type="text" class="uf-field mb-15" name="uf-post-title" value="${title}">
+                    <textarea name="uf-post-content" class="uf-field">${content}</textarea>
+                </div>
+                <div class="form-footer">
+                    <button class="uf-button update" id="forum-post-update" type="button">Update</button>
+                    <button class="uf-button close" type="button" data-close="dismiss">Close</button>
+                </div>
+            </form>
+        </div>
+        `;
+        
+        return $html;
     }
 
     doc.ready(()=>{
