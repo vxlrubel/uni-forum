@@ -21,21 +21,22 @@ $registration_date = date( 'd M, Y | H:i:s', strtotime( $get_registration_date )
 
 ?>
 
-<div class="forum-wrap">
+<div class="forum-wrap uf-reset">
     <div class="forum-post">
         <div action="" class="add-new-forum">
 
             <?php
                 if ( ! empty( $first_name ) ){
-                    $profile_name = 'Name: '. $first_name . ' ' .$last_name;
+                    $profile_name = $first_name . ' ' .$last_name;
                 }else{
-                    $profile_name = 'Display Name: '. $display_name;
+                    $profile_name = $display_name;
                 }
-                printf( '<span class="profile-name">%s</span>', $profile_name );
+                printf( '<h2 class="profile-name">%s</h2>', $profile_name );
                 printf( '<span class="registration-name">%s: %s</span>', 'Registration Date', $registration_date );
+                echo '<div class="link">';
                 printf( '<a href="javascript:void(0)" class="profile-button" id="profile-edit-form-toggle">%s</a>', 'Edit Profile' );
                 printf( '<a href="%1$s" class="profile-button">%2$s</a>', esc_url( $logout_url ), 'Sign Out' );
-                
+                echo '</div>';
             ?>
             <form action="#" class="profile-edit-form" id="profile-edit-form">
                 <input type="text" id="user-f-name" placeholder="First Name" value="<?php echo esc_attr( $first_name ); ?>">
@@ -68,18 +69,24 @@ $registration_date = date( 'd M, Y | H:i:s', strtotime( $get_registration_date )
                     $active_status   = is_user_online( $author_id ) ? 'active' : 'inactive';
                     ?>
                         <li data-item="<?php echo esc_attr( $post_id ); ?>">
-                            <p>
-                                <span class="author-status <?php echo esc_attr( $active_status );?>" data-id="user-<?php echo esc_attr( $author_id ); ?>-status"></span>
-                                <span class="author-name"><?php echo esc_html( $author_name ); ?></span>
-                            </p>
+                            <div class="forum-header">
+                                <div class="author-name">
+                                    <span><?php echo esc_html( $author_name ); ?></span>
+                                    <span class="author-status <?php echo esc_attr( $active_status );?>" data-id="user-<?php echo esc_attr( $author_id ); ?>-status"></span>
+                                </div>
+                                <?php if ( is_user_logged_in() && get_current_user_id() == $author_id ) : ?>
+                                    <div class="own-post-manage">
+                                        <button type="button" class="button edit">Edit</button>
+                                        <button type="button" class="button delete">Delete</button>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                             <h2 class="forum-title"><?php the_title(); ?></h2>
                             <p class="text-uf-default"><?php echo esc_html( $trimmed_content ); ?></p>
                             <a href="<?php the_permalink(); ?>" class="permalink">Read More</a>
-                            <?php if ( is_user_logged_in() && get_current_user_id() == $author_id ) : ?>
-                                <a href="javascript:void(0)" class="permalink edit">Edit</a>
-                                <a href="javascript:void(0)" class="permalink delete" >Delete</a>
-                            <?php endif; ?>
-                            <span class="uf-comment-count">
+                            <div class="forum-footer">
+                                <button type="button" class="button like">Like</button>
+                                <button type="button" class="button comment">
                                 <?php 
                                     if( $comment_count == 0 ){
                                         $comment_text = 'No comments';
@@ -90,7 +97,8 @@ $registration_date = date( 'd M, Y | H:i:s', strtotime( $get_registration_date )
                                     }
                                     echo $comment_text;
                                  ?>
-                            </span>
+                                </button>
+                            </div>
                         </li>
                     <?php
                 endwhile;
