@@ -247,7 +247,6 @@
             $('.forum-wrap').on('click', '#profile-edit-form-toggle', function(e){
                 e.preventDefault();
                 let _self = $(this);
-                console.log( $(this))
                 _self.closest('div.link').siblings('form#profile-edit-form').stop().slideToggle(300);
             });
         }
