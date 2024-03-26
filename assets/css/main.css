@@ -4,7 +4,13 @@
     --color-uf-red-deep : #f53b57;
     --color-uf-primary : #273c75;
     --color-uf-primary-hover : #192a56;
-    --color-uf-border: #c8d6e5
+    --color-uf-border: #c8d6e5;
+    --color-uf-white: #ffffff;
+    --color-uf-focus: #dff9fb;
+    --color-uf-button: ##dfe4ea;
+    --color-uf-button-hover: #ced6e0;
+    --color-uf-active: #2ed573;
+    --color-uf-title: #0a3d62;
 }
 .uf-reset,
 .uf-reset::after,
@@ -15,4 +21,164 @@
     box-sizing: border-box !important;
     font-size: 14px;
     color: var(--color-uf-default);
+    font-family: sans-serif;
+}
+.uf-reset input[type="text"],
+.uf-reset input[type="password"],
+.uf-reset input[type="email"],
+.uf-reset textarea{
+    display: block;
+    width: 100%;
+    padding: 7px;
+    box-shadow: none;
+    outline: 0;
+    border: 1px solid var(--color-uf-border);
+    margin-bottom: 15px;
+    background-color: var(--color-uf-white);
+}
+.uf-reset textarea{
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 120px;
+    max-height: 120px;
+    border-top-width: 15px;
+}
+.uf-reset input[type="text"]:focus,
+.uf-reset input[type="password"]:focus,
+.uf-reset input[type="email"]:focus,
+.uf-reset textarea:focus{
+    border-color: var(--color-uf-primary);
+    background-color: var(--color-uf-focus);
+}
+.uf-reset ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.uf-reset button,
+.uf-reset button[type="button"],
+.uf-reset .button{
+    display: inline-block;
+    border: 1px solid var(--color-uf-border);
+    padding: 5px 15px;
+    background-color: var(--color-uf-button);
+    cursor: pointer;
+    font-size: 13px;
+}
+.uf-reset button:hover,
+.uf-reset button[type="button"]:hover,
+.uf-reset .button:hover{
+    background-color: var(--color-uf-button-hover) !important;
+}
+.text-right{
+    text-align: right !important;
+}
+.button-submit{
+    display: inline-block;
+    padding: 7px 25px;
+    background-color: var(--color-uf-primary);
+    color: var(--color-uf-white);
+    box-shadow: none;
+    outline: 0;
+    border: 1px solid var(--color-uf-primary);
+    cursor: pointer;
+}
+.button-submit:hover{
+    background-color: var(--color-uf-primary-hover);
+    border-color: var(--color-uf-primary-hover);
+}
+
+
+/*****************************************************/
+/****************** FORUM PAGE ***********************/
+/*****************************************************/
+.forum-post {
+	border: 1px solid var(--color-uf-border);
+	padding: 20px;
+	margin-bottom: 20px;
+}
+.forum-items > li {
+    padding: 20px;
+    border: 1px solid var(--color-uf-border);
+}
+.forum-items > li:not(:last-child){
+    border-bottom: 0;
+}
+.forum-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.uf-reset .author-name span {
+    text-transform: capitalize;
+    color: var(--color-uf-primary-hover);
+    font-weight: 600;
+}
+.author-status {
+	display: inline-block;
+	height: 8px;
+	width: 8px;
+	border-radius: 50%;
+	margin-left: 5px;
+}
+.author-status.inactive{
+    background-color: var(--color-uf-border);
+}
+.author-status.active{
+    background-color: var(--color-uf-active);
+}
+.forum-title {
+	font-size: 15px;
+	color: var(--color-uf-title);
+	text-transform: uppercase;
+}
+.permalink {
+	display: inline-block;
+	color: var(--color-uf-primary);
+    font-weight: 600;
+    font-size: 12px;
+	margin-bottom: 15px;
+	text-decoration: none;
+	padding: 3px 3px 3px 0;
+}
+.permalink:hover{
+    color: var(--color-uf-primary-hover);
+}
+.uf-reset .button.delete{
+    background-color: var(--color-uf-red);
+    border-color: var(--color-uf-red);
+    color: var(--color-uf-white);
+}
+.uf-reset .button.delete:hover{
+    background-color: var(--color-uf-red-deep) !important;
+    border-color: var(--color-uf-red-deep) !important;
+}
+.uf-reset .button.edit{
+    background-color: var(--color-uf-primary);
+    border-color: var(--color-uf-primary);
+    color: var(--color-uf-white);
+}
+.uf-reset .button.edit:hover{
+    background-color: var(--color-uf-primary-hover) !important;
+    border-color: var(--color-uf-primary-hover) !important;
+}
+.pagination > * {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    height: 30px;
+    width: 30px;
+    border: 1px solid var(--color-uf-border) !important;
+}
+.pagination > *:not(.current):hover{
+    background-color: var(--color-uf-primary-hover);
+    color: var(--color-uf-white);
+}
+.pagination > .current {
+    background-color: var(--color-uf-primary);
+    color: var(--color-uf-white);
+}
+.pagination .dots {
+	border: none !important;
 }
