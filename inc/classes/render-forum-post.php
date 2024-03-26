@@ -5,7 +5,7 @@ defined('ABSPATH') || exit;
 
 <div class="forum-wrap">
     <div class="forum-post">
-        <form action="" class="add-new-forum">
+        <form action="" class="add-new-forum" id="add-new-forum-post">
             <input type="text" name="forum_tite" placeholder="Forum Title">
             <textarea name="forum_content" placeholder="Write content"></textarea>
             <?php wp_nonce_field( 'add_new_forum_post', 'forum_nonce' ); ?>
