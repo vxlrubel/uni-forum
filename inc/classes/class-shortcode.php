@@ -30,7 +30,7 @@ class Shortcode{
 
         if( ! is_user_logged_in() ) {
             ob_start();
-            echo '<div class="uf-login-form-parent">';
+            echo '<div class="uf-login-form-parent uf-reset border p-20">';
             wp_login_form();
             echo '</div>';
             $login_form = ob_get_clean();
