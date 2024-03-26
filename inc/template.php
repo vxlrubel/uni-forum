@@ -18,6 +18,25 @@ function is_user_online( $user_id ) {
     return (current_time('timestamp') - $last_activity) < $threshold;
 }
 
+/**
+ * get current profile name
+ *
+ * @return void
+ */
+function uf_profile_name(){
+    $current_user = wp_get_current_user();
+    $first_name   = $current_user->first_name;
+    $last_name    = $current_user->last_name;
+    $display_name = $current_user->display_name;
+
+    if ( ! empty( $first_name ) ){
+        $profile_name = $first_name . ' ' .$last_name;
+    }else{
+        $profile_name = $display_name;
+    }
+    echo $profile_name;
+}
+
 function uf_get_forum_posts( $author_id = null ){
     $args = [
         'post_type'      => 'forum',
