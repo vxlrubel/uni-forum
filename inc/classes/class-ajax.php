@@ -15,6 +15,8 @@ class Ajax_Handle{
     
     private $update_forum_post = 'update_forum_post_by_id';
 
+    private $update_user_profile = 'update_user_profile';
+
     public function __construct(){
         // add nrw forum post
         add_action("wp_ajax_{$this->add_forum_post}", [ $this, 'add_new_forum_post' ] );
@@ -31,6 +33,10 @@ class Ajax_Handle{
         // delete forum post
         add_action("wp_ajax_{$this->update_forum_post}", [ $this, 'update_forum_post_by_id' ] );
         add_action("wp_ajax_nopriv_{$this->update_forum_post}", [ $this, 'update_forum_post_by_id' ] );
+
+        // update user profile
+        add_action("wp_ajax_{$this->update_user_profile}", [ $this, 'update_user_profile' ] );
+        add_action("wp_ajax_nopriv_{$this->update_user_profile}", [ $this, 'update_user_profile' ] );
     }
 
     /**
@@ -172,6 +178,34 @@ class Ajax_Handle{
             wp_send_json_success( [ 'status' => 200 ] );
         }else{
             wp_send_json_error( [ 'status' => 403 ] );
+        }
+    }
+
+    public function update_user_profile(){
+        if ( ! defined('DOING_AJAX') || ! DOING_AJAX ){
+            wp_send_json_error( 'Invalid AJAX request.' );
+        }
+    
+        $user_id    = $_POST['id'];
+        $first_name = isset( $_POST['f_name'] ) ? sanitize_text_field( $_POST['f_name'] ) : '';
+        $last_name  = isset( $_POST['l_name'] ) ? sanitize_text_field( $_POST['l_name'] ) : '';
+
+        if( empty( $user_id ) ){
+            wp_send_json_error( 'User id not valid.' );
+        }
+        $result = wp_update_user(
+            [
+                'ID'         => $user_id,
+                'first_name' => $first_name,
+                'last_name'  => $last_name
+            ]
+        );
+    
+        if ( is_wp_error( $result ) ) {
+            wp_send_json_error( $result->get_error_message() );
+        } else {
+            $profile_name = $first_name . ' ' . $last_name;
+            wp_send_json_success( $profile_name );
         }
     }
 }
