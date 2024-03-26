@@ -52,6 +52,12 @@ class Assets{
                 true
             );
         }
+
+        $args = [
+            'ajax_url' => admin_url( 'admin-ajax.php' )
+        ];
+        
+        wp_localize_script( 'uni-forum-script', 'UF', $args );
     }
     
     /**
