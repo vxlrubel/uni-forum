@@ -343,3 +343,10 @@ textarea.uf-field {
     display: none;
     margin-top: 15px;
 }
+
+.prevent-forum-post-title {
+	text-transform: uppercase;
+	color: var(--color-uf-primary);
+	font-weight: 600;
+	font-size: 15px;
+}
