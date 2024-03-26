@@ -5,6 +5,7 @@
     class UniForum{
         init(){
             this.addNewForumPosts();
+            this.deleteForumPost();
         }
 
         addNewForumPosts(){
@@ -58,6 +59,42 @@
             });
         }
 
+        deleteForumPost(){
+            $('.forum-wrap').on('click', 'button.button.delete', function(e){
+                e.preventDefault();
+                let item   = $(this).closest('li');
+                let postID = parseInt(item.data('item'));
+
+                if( ! confirm('Are you sure?') ){
+                    return;
+                }
+
+                let data = {
+                    action : 'delete_forum_post',
+                    post_id: postID
+                }
+                
+                $.ajax({
+                    type      : 'POST',
+                    url       : ajaxUrl,
+                    data      : data,
+                    beforeSend: ()=>{
+                        $(this).text('Deleting...');
+                    },
+                    success   : ( response )=>{
+                        let receiveData = response.data;
+                        if( receiveData.status == 200 ){
+                            item.css('background-color', '#f53b57').fadeOut(300, ()=>item.remove());
+                        }else{
+                            console.log( receiveData );
+                        }
+                    },
+                    error     : ( error )=>{
+                        console.log( 'Error:', error );
+                    },
+                });
+            });
+        }
         
     }
 
@@ -85,7 +122,7 @@
         `;
         return htmlElement;
     }
-    
+
     doc.ready(()=>{
         const forum = new UniForum;
         forum.init();
