@@ -37,6 +37,12 @@ function uf_profile_name( $author_id ){
     echo $profile_name;
 }
 
+/**
+ * retrive the forum post item
+ *
+ * @param [type] $author_id
+ * @return void
+ */
 function uf_get_forum_posts( $author_id = null ){
     $args = [
         'post_type'      => 'forum',
