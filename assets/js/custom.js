@@ -8,6 +8,7 @@
             this.deleteForumPost();
             this.fetchForumDataInsidePopupForm();
             this.destroyfetchForumDataInsidePopupForm();
+            this.updateForumPostById();
         }
 
         addNewForumPosts(){
@@ -149,6 +150,57 @@
 
                 $(this).fadeOut(300, ()=>{
                     $(this).remove();
+                });
+            });
+        }
+
+        updateForumPostById(){
+            $('body').on('click', '#forum-post-update', function(e){
+                e.preventDefault();
+                let _self   = $(this);
+                let form    = $(this).closest('form.uf-update-form');
+                let forumId = parseInt(form.data('update-id'));
+                let title   = form.find('input[name="uf-post-title"]').val().trim();
+                let excerpt = form.find('textarea[name="uf-post-content"]').val().trim();
+                let item    = $('body').find(`li[data-item="${forumId}"]`);
+                
+                if ( title == null || title == '' && excerpt == null || excerpt == '' ){
+                    console.log('empty')
+                    return;
+                }
+
+                let data = {
+                    action : 'update_forum_post_by_id',
+                    post_id: forumId,
+                    title  : title,
+                    content: excerpt
+                }
+
+                $.ajax({
+                    type      : 'POST',
+                    url       : ajaxUrl,
+                    data      : data,
+                    beforeSend: ()=>{
+                        _self.text('Updating...');
+                    },
+                    success   : ( response )=>{
+                        if( response.data.status === 200 ){
+                            // remove popup form
+                            _self.closest('.uf-update-form-parent').fadeOut(300, ()=>{
+                                _self.closest('.uf-update-form-parent').remove();
+                            });
+
+                            let splitExcerpt   = excerpt.split( ' ' );
+                            let sliceExcerpt   = splitExcerpt.slice( 0, 20 );
+                            let trimmedContent = sliceExcerpt.join( ' ' );
+
+                            item.find('h2.forum-title').text( title );
+                            item.find('p.text-uf-default').text( trimmedContent + '...' );
+                        }
+                    },
+                    error     : ( error )=>{
+                        console.log( 'Error:', error );
+                    },
                 });
             });
         }
