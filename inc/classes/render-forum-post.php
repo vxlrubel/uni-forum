@@ -35,18 +35,24 @@ defined('ABSPATH') || exit;
                     $active_status   = is_user_online( $author_id ) ? 'active' : 'inactive';
                     ?>
                         <li data-item="<?php echo esc_attr( $post_id ); ?>">
-                            <p>
-                                <span class="author-name"><?php echo esc_html( $author_name ); ?></span>
-                                <span class="author-status <?php echo esc_attr( $active_status );?>" data-id="user-<?php echo esc_attr( $author_id ); ?>-status"></span>
-                            </p>
+                            <div class="forum-header">
+                                <div class="author-name">
+                                    <span><?php echo esc_html( $author_name ); ?></span>
+                                    <span class="author-status <?php echo esc_attr( $active_status );?>" data-id="user-<?php echo esc_attr( $author_id ); ?>-status"></span>
+                                </div>
+                                <?php if ( is_user_logged_in() && get_current_user_id() == $author_id ) : ?>
+                                    <div class="own-post-manage">
+                                        <button type="button edit">Edit</button>
+                                        <button type="button delete">Delete</button>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                             <h2 class="forum-title"><?php the_title(); ?></h2>
                             <p class="text-uf-default"><?php echo esc_html( $trimmed_content ); ?></p>
                             <a href="<?php the_permalink(); ?>" class="permalink">Read More</a>
-                            <?php if ( is_user_logged_in() && get_current_user_id() == $author_id ) : ?>
-                                <a href="javascript:void(0)" class="permalink edit">Edit</a>
-                                <a href="javascript:void(0)" class="permalink delete" >Delete</a>
-                            <?php endif; ?>
-                            <span class="uf-comment-count">
+                            <div class="forum-footer">
+                                <button type="button like">Like</button>
+                                <button type="button comment">
                                 <?php 
                                     if( $comment_count == 0 ){
                                         $comment_text = 'No comments';
@@ -57,7 +63,8 @@ defined('ABSPATH') || exit;
                                     }
                                     echo $comment_text;
                                  ?>
-                            </span>
+                                </button>
+                            </div>
                         </li>
                     <?php
                 endwhile;
