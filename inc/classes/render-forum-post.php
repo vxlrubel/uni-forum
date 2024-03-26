@@ -9,8 +9,8 @@ defined('ABSPATH') || exit;
             <input type="text" name="forum_tite" placeholder="Forum Title">
             <textarea name="forum_content" placeholder="Write content"></textarea>
             <?php wp_nonce_field( 'add_new_forum_post', 'forum_nonce' ); ?>
-            <div class="submit-button">
-                <input type="submit" value="Publish">
+            <div class="text-right">
+                <input type="submit" class="button-submit" value="Publish">
             </div>
         </form>
     </div>
@@ -42,8 +42,8 @@ defined('ABSPATH') || exit;
                                 </div>
                                 <?php if ( is_user_logged_in() && get_current_user_id() == $author_id ) : ?>
                                     <div class="own-post-manage">
-                                        <button type="button edit">Edit</button>
-                                        <button type="button delete">Delete</button>
+                                        <button type="button" class="button edit">Edit</button>
+                                        <button type="button" class="button delete">Delete</button>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -51,8 +51,8 @@ defined('ABSPATH') || exit;
                             <p class="text-uf-default"><?php echo esc_html( $trimmed_content ); ?></p>
                             <a href="<?php the_permalink(); ?>" class="permalink">Read More</a>
                             <div class="forum-footer">
-                                <button type="button like">Like</button>
-                                <button type="button comment">
+                                <button type="button" class="button like">Like</button>
+                                <button type="button" class="button comment">
                                 <?php 
                                     if( $comment_count == 0 ){
                                         $comment_text = 'No comments';
