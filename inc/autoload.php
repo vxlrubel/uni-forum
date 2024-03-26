@@ -5,6 +5,7 @@ defined('ABSPATH') || exit;
 
 $files = [
     'template',
+    'classes/class-assets',
     'classes/class-ajax',
     'classes/class-shortcode',
 ];
