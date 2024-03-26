@@ -23,11 +23,11 @@ function is_user_online( $user_id ) {
  *
  * @return void
  */
-function uf_profile_name(){
-    $current_user = wp_get_current_user();
-    $first_name   = $current_user->first_name;
-    $last_name    = $current_user->last_name;
-    $display_name = $current_user->display_name;
+function uf_profile_name( $author_id ){
+
+    $first_name   = get_the_author_meta('first_name', $author_id);
+    $last_name    = get_the_author_meta('last_name', $author_id);
+    $display_name = get_the_author_meta( 'display_name', $author_id );
 
     if ( ! empty( $first_name ) ){
         $profile_name = $first_name . ' ' .$last_name;
@@ -73,7 +73,7 @@ function uf_get_forum_posts( $author_id = null ){
                 <li data-item="<?php echo esc_attr( $post_id ); ?>">
                     <div class="forum-header">
                         <div class="author-name">
-                            <span><?php echo esc_html( $author_name ); ?></span>
+                            <span><?php esc_html( uf_profile_name( $author_id ) ); ?></span>
                             <span class="author-status <?php echo esc_attr( $active_status );?>" data-id="user-<?php echo esc_attr( $author_id ); ?>-status"></span>
                         </div>
                         <?php if ( is_user_logged_in() && get_current_user_id() == $author_id ) : ?>
