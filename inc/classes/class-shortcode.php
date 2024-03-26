@@ -57,9 +57,9 @@ class Shortcode{
             return ob_get_clean();
         } else {
             ob_start();
-            echo '<div class="uf-login-form-parent">';
+            echo '<div class="uf-reset"><div class="uf-login-form-parent border p-20">';
             wp_login_form();
-            echo '</div>';
+            echo '</div></div>';
             $login_form = ob_get_clean();
 
             return $login_form;
