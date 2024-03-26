@@ -45,8 +45,8 @@
                             let receivedItem = `
                             <li data-item="${receivedData.id}">
                                 <p>
-                                    <span class="author-status active"></span>
                                     <span class="author-name">${receivedData.author}</span>
+                                    <span class="author-status active"></span>
                                 </p>
                                 <h2 class="forum-title">${receivedData.title}</h2>
                                 <p class="text-uf-default">${receivedData.excerpt}</p>

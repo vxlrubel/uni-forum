@@ -3,7 +3,7 @@
 defined('ABSPATH') || exit;
 ?>
 
-<div class="forum-wrap">
+<div class="forum-wrap uf-reset">
     <div class="forum-post">
         <form action="" class="add-new-forum" id="add-new-forum-post">
             <input type="text" name="forum_tite" placeholder="Forum Title">
@@ -36,8 +36,8 @@ defined('ABSPATH') || exit;
                     ?>
                         <li data-item="<?php echo esc_attr( $post_id ); ?>">
                             <p>
-                                <span class="author-status <?php echo esc_attr( $active_status );?>" data-id="user-<?php echo esc_attr( $author_id ); ?>-status"></span>
                                 <span class="author-name"><?php echo esc_html( $author_name ); ?></span>
+                                <span class="author-status <?php echo esc_attr( $active_status );?>" data-id="user-<?php echo esc_attr( $author_id ); ?>-status"></span>
                             </p>
                             <h2 class="forum-title"><?php the_title(); ?></h2>
                             <p class="text-uf-default"><?php echo esc_html( $trimmed_content ); ?></p>
