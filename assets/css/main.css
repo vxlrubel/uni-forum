@@ -1,3 +1,11 @@
+:root{
+    --color-uf-default : #34495e;
+    --color-uf-red : #ef5777;
+    --color-uf-red-deep : #f53b57;
+    --color-uf-primary : #273c75;
+    --color-uf-primary-hover : #192a56;
+    --color-uf-border: #c8d6e5
+}
 .uf-reset,
 .uf-reset::after,
 .uf-reset::before,
@@ -6,4 +14,5 @@
 .uf-reset *::before{
     box-sizing: border-box !important;
     font-size: 14px;
+    color: var(--color-uf-default);
 }
