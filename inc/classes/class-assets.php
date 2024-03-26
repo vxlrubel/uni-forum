@@ -10,6 +10,9 @@ class Assets{
         
         // register stylesheets
         add_action( 'wp_enqueue_scripts', [ $this, 'register_stylesheets' ] );
+
+        // register scripts
+        add_action( 'wp_enqueue_scripts', [ $this, 'register_scripts' ] );
     }
 
     /**
@@ -31,6 +34,25 @@ class Assets{
             );
         }
     }
+
+    /**
+     * register scripts
+     *
+     * @return void
+     */
+    public function register_scripts(){
+        $get_scripts = $this->get_scripts();
+
+        foreach ( $get_scripts as $handle => $script ){
+            wp_enqueue_script(
+                $handle,
+                $script['src'],
+                $script['deps'],
+                UF_VERSION,
+                true
+            );
+        }
+    }
     
     /**
      * get the stylesheets
@@ -47,5 +69,23 @@ class Assets{
         $stylesheets = apply_filters( 'uni_forum_stylesheets', $stylesheets );
 
         return $stylesheets;
+    }
+
+    /**
+     * get scripts
+     *
+     * @return void
+     */
+    public function get_scripts(){
+        $scripts = [
+            'uni-forum-script' => [
+                'src'  => UF_ASSETS_JS . 'custom.js',
+                'deps' => ['jquery']
+            ]
+        ];
+
+        $scripts = apply_filters( 'uni_forum_scripts', $scripts );
+        
+        return $scripts;
     }
 }
