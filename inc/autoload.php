@@ -8,6 +8,7 @@ $files = [
     'classes/class-assets',
     'classes/class-ajax',
     'classes/class-shortcode',
+    'classes/class-admin-menu',
 ];
 
 foreach ( $files as $file ) {
