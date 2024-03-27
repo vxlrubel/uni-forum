@@ -69,19 +69,29 @@ class Ajax_Handle{
         $post_id = wp_insert_post( $forum_post );
 
         if( $post_id ){
-            $post             = get_post($post_id);
-            $excerpt          = wp_trim_words($post->post_content, 20);
-            $permalink        = esc_url( get_permalink($post_id) );
-            $post_author      = get_userdata($post->post_author);
-            $post_author_name = $post_author ? $post_author->display_name : 'Unknown';
-            $comment_count    = get_comments_number( $post_id );
+            $post          = get_post( $post_id );
+            $excerpt       = wp_trim_words( $post->post_content, 20 );
+            $permalink     = esc_url( get_permalink( $post_id ) );
+            $post_author   = get_userdata( $post->post_author );
+            $display_name  = $post_author ? $post_author->display_name : 'Unknown';
+            $comment_count = get_comments_number( $post_id );
+            $first_name    = isset( $post_author->first_name ) ? $post_author->first_name : '';
+            $last_name     = isset( $post_author->last_name ) ? $post_author->last_name : '';
+
+            $profile_name = '';
+            
+            if( ! empty( $post_author->first_name ) ){
+                $profile_name = $first_name . ' ' . $last_name;
+            }else{
+                $profile_name = $display_name;
+            }
 
             $response  = [
                 'id'            => $post_id,
                 'title'         => $title,
                 'excerpt'       => $excerpt,
                 'permalink'     => $permalink,
-                'author'        => $post_author_name,
+                'author'        => $profile_name,
                 'access'        => true,
                 'comment_count' => $comment_count
             ];
