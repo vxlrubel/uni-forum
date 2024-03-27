@@ -11,6 +11,7 @@
             this.updateForumPostById();
             this.updateProfileUserData();
             this.slideToggleUserEditForm();
+            this.userRealTimeStatus();
         }
 
         addNewForumPosts(){
@@ -249,6 +250,46 @@
                 let _self = $(this);
                 _self.closest('div.link').siblings('form#profile-edit-form').stop().slideToggle(300);
             });
+        }
+
+        userRealTimeStatus(){
+
+            const getRealStatus = ()=>{
+                let data = {
+                    action: 'user_real_time_status',
+                    status: 'active'
+                };
+                $.ajax({
+                    type      : 'POST',
+                    url       : ajaxUrl,
+                    data      : data,
+                    success   : ( response )=>{
+                        let getData = response.data;
+    
+                        if (getData && typeof getData === 'object') {
+                            $('span.author-status').removeClass('active inactive');
+                            
+                            for (var key in getData) {
+                                if (getData.hasOwnProperty(key)) {
+                                    var $span = $('span[data-id="user-' + key + '-status"]');
+                                    $span.addClass(getData[key]);
+                                }
+                            }
+                        } else {
+                            console.error('Invalid response data format:', getData);
+                        }
+    
+                    },
+                    error     : ( error )=>{
+                        console.log( 'Error: ', error );
+                    },
+                });
+            }
+            
+            setInterval(() => {
+                getRealStatus();
+            }, 15000);
+            
         }
         
     }
