@@ -218,7 +218,6 @@
             'menu_position'      => 20,
             'menu_icon'          => 'dashicons-buddicons-forums',
             'supports'           => [ 'title', 'editor', 'author', 'comments' ],
-            'show_in_rest'       => true,
         ];
 
         register_post_type( 'forum', $args );
