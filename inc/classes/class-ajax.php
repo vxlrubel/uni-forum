@@ -17,6 +17,8 @@ class Ajax_Handle{
 
     private $update_user_profile = 'update_user_profile';
 
+    private $real_time_status = 'user_real_time_status';
+
     public function __construct(){
         // add nrw forum post
         add_action("wp_ajax_{$this->add_forum_post}", [ $this, 'add_new_forum_post' ] );
@@ -37,6 +39,10 @@ class Ajax_Handle{
         // update user profile
         add_action("wp_ajax_{$this->update_user_profile}", [ $this, 'update_user_profile' ] );
         add_action("wp_ajax_nopriv_{$this->update_user_profile}", [ $this, 'update_user_profile' ] );
+
+        // update user profile
+        add_action("wp_ajax_{$this->real_time_status}", [ $this, 'real_time_status' ] );
+        add_action("wp_ajax_nopriv_{$this->real_time_status}", [ $this, 'real_time_status' ] );
     }
 
     /**
@@ -222,5 +228,36 @@ class Ajax_Handle{
             $profile_name = $first_name . ' ' . $last_name;
             wp_send_json_success( $profile_name );
         }
+    }
+
+    /**
+     * update user real time status
+     *
+     * @return void
+     */
+    public function real_time_status(){
+        if ( ! defined('DOING_AJAX') || ! DOING_AJAX ){
+            wp_send_json_error( 'Invalid AJAX request.' );
+        }
+
+        $users         = get_users();
+        $current_time  = current_time('timestamp');
+        $user_statuses = [];
+
+        foreach ( $users as $user ) {
+            $user_id      = $user->ID;
+            $last_active  = get_user_meta( $user_id, 'last_activity', true );
+
+            if( ! empty( $last_active ) ) {
+                $traking_time = $current_time - $last_active;
+            }
+
+            $is_active = $traking_time < 15;
+            $status    = $is_active ? 'active' : 'inactive';
+
+            $user_statuses[$user_id] = $status;
+        }
+
+        wp_send_json_success( $user_statuses );
     }
 }
