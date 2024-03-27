@@ -65,6 +65,40 @@
 
         // WordPress version control notices
         add_action( 'admin_notices', [ $this, 'wp_version_notice' ] );
+
+        // create forum pages
+        register_activation_hook( __FILE__, [ $this, 'create_forum_pages'] );
+    }
+
+    /**
+     * create forum pages when activate the plugin
+     *
+     * @return void
+     */
+    public function create_forum_pages(){
+        $pages = [
+            'profile'      => [ 'profile', '[uf_user_profile]' ],
+            'registration' => [ 'registration', '[uf_registration_form]' ],
+            'forum'        => [ 'render-forums', '[uf_render_forum]' ]
+        ];
+    
+        foreach ( $pages as $page_name => $page_data ) {
+            $page_title   = ucwords( str_replace( '_', ' ', $page_name ) );
+            $page_slug    = $page_data[0];
+            $page_content = $page_data[1];
+    
+            if ( ! get_page_by_path( $page_slug ) ) {
+                $page_args = [
+                    'post_title'     => $page_title,
+                    'post_name'      => $page_slug,
+                    'post_content'   => $page_content,
+                    'post_status'    => 'publish',
+                    'post_type'      => 'page',
+                ];
+
+                wp_insert_post( $page_args );
+            }
+        }
     }
 
     /**
