@@ -43,27 +43,20 @@ function uf_profile_name( $author_id ){
  * @param [type] $author_id
  * @return void
  */
-function uf_get_forum_posts( $author_id = null ){
-    $args = [
+function uf_get_forum_posts( int $author_id = null ){
+    $args1 = [
         'post_type'      => 'forum',
         'posts_per_page' => 10,
         'paged'          => get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1,
     ];
 
-    if( is_null( $author_id ) ){
-        $args = [
-            'post_type'      => 'forum',
-            'posts_per_page' => 10,
-            'paged'          => get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1,
-        ];
-    }else{
-        $args = [
-            'author'         => $author_id,
-            'post_type'      => 'forum',
-            'posts_per_page' => 10,
-            'paged'          => get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1,
-        ];
+    $args2 = [];
+
+    if( ! is_null( $author_id ) ){
+        $args2['author'] = intval( $author_id );
     }
+
+    $args = array_merge( $args1, $args2 );
 
     $forums = new WP_Query( $args );
 
