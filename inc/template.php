@@ -10,7 +10,7 @@
  * @param [type] integer $user_id
  * @return boolean
  */
-function is_user_online( $user_id ) {
+function is_user_online( int $user_id ) {
     $threshold     = 1 * MINUTE_IN_SECONDS;
     $last_activity = get_user_meta($user_id, 'last_activity', true);
     $last_activity = (int) $last_activity;
@@ -23,7 +23,7 @@ function is_user_online( $user_id ) {
  *
  * @return void
  */
-function uf_profile_name( $author_id ){
+function uf_profile_name( int $author_id ){
 
     $first_name   = get_the_author_meta('first_name', $author_id);
     $last_name    = get_the_author_meta('last_name', $author_id);
@@ -42,7 +42,7 @@ function uf_profile_name( $author_id ){
  *
  * @return $count
  */
-function get_row_count( $post_id ){
+function get_row_count( int $post_id ){
     global $wpdb;
     $table = $wpdb->prefix . 'uf_likes';
     $sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE post_id = %d", $post_id );
@@ -56,7 +56,7 @@ function get_row_count( $post_id ){
  *
  * @return $status
  */
-function is_user_doing_like( $post_id, $current_user_id ){
+function is_user_doing_like( int $post_id, int $current_user_id ){
     global $wpdb;
     $table  = $wpdb->prefix . 'uf_likes';
     $sql    = $wpdb->prepare( "SELECT * FROM $table WHERE post_id = %d AND user_id = %d", $post_id, $current_user_id );
