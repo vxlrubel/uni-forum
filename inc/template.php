@@ -86,7 +86,10 @@ function uf_get_forum_posts( int $author_id = null ){
                     <p class="text-uf-default"><?php echo esc_html( $trimmed_content ); ?></p>
                     <a href="<?php the_permalink(); ?>" class="permalink">Read More</a>
                     <div class="forum-footer">
-                        <button type="button" class="button like">Like</button>
+                        <button type="button" class="button like">
+                            <span class="like-count"></span>
+                            <span class="like-text">Like</span>
+                        </button>
                         <button type="button" class="button comment">
                         <?php 
                             if( $comment_count == 0 ){
