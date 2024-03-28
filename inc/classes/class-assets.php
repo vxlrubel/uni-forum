@@ -13,6 +13,9 @@ class Assets{
 
         // register scripts
         add_action( 'wp_enqueue_scripts', [ $this, 'register_scripts' ] );
+
+        // register admin enqueue scripts
+        add_action( 'admin_enqueue_scripts', [ $this, 'register_admin_scripts' ] );
     }
 
     /**
@@ -94,6 +97,72 @@ class Assets{
         ];
 
         $scripts = apply_filters( 'uni_forum_scripts', $scripts );
+        
+        return $scripts;
+    }
+
+    /**
+     * register admin scripts and stylesheet
+     *
+     * @return void
+     */
+    public function register_admin_scripts(){
+        $get_admin_style   = $this->get_admin_style();
+        $get_admin_scripts = $this->get_admin_scripts();
+
+        foreach ( $get_admin_style as $handle => $style ){
+            $deps = isset( $style['deps'] ) ? $style['deps'] : '';
+            wp_enqueue_style(
+                $handle,
+                $style['src'],
+                $deps,
+                UF_VERSION,
+                'all'
+            );
+        }
+
+        foreach ( $get_admin_scripts as $handle => $script ){
+            wp_enqueue_script(
+                $handle,
+                $script['src'],
+                $script['deps'],
+                UF_VERSION,
+                true
+            );
+        }
+    }
+    
+    /**
+     * get admin style
+     *
+     * @return $stylesheets
+     */
+    public function get_admin_style(){
+        $stylesheets = [
+            'uni-forum-style' => [
+                'src' => UF_ASSETS_ADMIN_CSS . 'uf-admin-style.css'
+            ]
+        ];
+
+        $stylesheets = apply_filters( 'uni_forum_admin_stylesheets', $stylesheets );
+
+        return $stylesheets;
+    }
+
+    /**
+     * get admin script
+     *
+     * @return $scripts
+     */
+    public function get_admin_scripts(){
+        $scripts = [
+            'uni-forum-script' => [
+                'src'  => UF_ASSETS_ADMIN_JS . 'uf-admin-scripts.js',
+                'deps' => ['jquery']
+            ]
+        ];
+
+        $scripts = apply_filters( 'uni_forum_admin_scripts', $scripts );
         
         return $scripts;
     }
