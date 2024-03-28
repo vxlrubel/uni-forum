@@ -319,23 +319,13 @@ class Ajax_Handle{
             $liked_post = [];
         }
 
-        $liked_class = get_user_meta( $user_id, 'liked_class', true );
-        if( ! $liked_class ){
-            $liked_class = [];
-        }
-
         if( in_array( $post_id, $liked_post ) ){
             wp_send_json_error( 'User already like this post.' );
-        }
-        if( in_array( $post_id, $liked_class ) ){
-            wp_send_json_error( 'Already added class.' );
         }
 
         $like_count = intval( get_post_meta( $post_id, 'like_count', true ) );
         $like_count++;
         update_post_meta($post_id, 'like_count', $like_count);
-        update_post_meta( $post_id, 'liked_class', 'liked' );
-
 
         $liked_posts[] = $post_id;
         update_user_meta( $user_id, 'liked_posts', $liked_posts );

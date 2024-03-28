@@ -282,6 +282,12 @@
                         }
                         let likeCount = parseInt(_self.children('span.like-count').text());
                         _self.addClass('liked').children('span.like-text').text('Liked');
+
+                        // console.log( typeof likeCount + likeCount )
+                        if( ! likeCount ){
+                            likeCount = 0;
+                        }
+                        
                         _self.children('span.like-count').text( likeCount + 1 );
 
                         console.log(res.data)
