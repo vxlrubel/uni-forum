@@ -1,6 +1,9 @@
 ;(function($){
-    const doc     = $(document);
-    const ajaxUrl = UF.ajax_url;
+    const doc          = $(document);
+    const ajaxUrl      = UF.ajax_url;
+    const nonce_delete = UF.nonce_delete;
+    const nonce_edit   = UF.nonce_edit;
+    const nonce_update = UF.nonce_update;
 
     class UniForum{
         init(){
@@ -30,7 +33,8 @@
 
                 let data = {
                     action : 'delete_forum_post',
-                    post_id: postID
+                    post_id: postID,
+                    nonce  : nonce_delete
                 }
                 
                 $.ajax({
