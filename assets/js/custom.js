@@ -4,6 +4,7 @@
     const nonce_delete = UF.nonce_delete;
     const nonce_edit   = UF.nonce_edit;
     const nonce_update = UF.nonce_update;
+    const nonce_like   = UF.nonce_like;
 
     class UniForum{
         init(){
@@ -15,6 +16,7 @@
             this.updateProfileUserData();
             this.slideToggleUserEditForm();
             this.userRealTimeStatus();
+            this.doingAjaxLikeInForumPost();
         }
 
         addNewForumPosts(){
@@ -249,6 +251,43 @@
                 getRealStatus();
             }, 15000);
             
+        }
+
+        doingAjaxLikeInForumPost(){
+            $('.forum-wrap').on('click', 'button.button.like', function(e){
+                e.preventDefault();
+                let _self  = $(this);
+                let postId = parseInt(_self.closest('li').data('item'));
+                
+                if( _self.hasClass('liked') ){
+                    alert('You already liked this post.');
+                    return;
+                }
+                let data = {
+                    action : 'forum_post_like',
+                    post_id: postId,
+                    nonce  : nonce_like
+                }
+
+                $.ajax({
+                    type      : 'POST',
+                    url       : ajaxUrl,
+                    data      : data,
+                    beforeSend: ()=>{
+                        _self.children('span.like-text').text('Liking...');
+                    },
+                    success   : ( res ) => {
+                        if( ! res.success ) {
+                            return;
+                        }
+                        let likeCount = parseInt(_self.children('span.like-count').text());
+                        _self.addClass('liked').children('span.like-text').text('Liked');
+                        _self.children('span.like-count').text( likeCount + 1 );
+
+                        console.log(res.data)
+                    }
+                });
+            })
         }
         
     }
