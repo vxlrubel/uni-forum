@@ -19,6 +19,8 @@ class Ajax_Handle{
 
     private $real_time_status = 'user_real_time_status';
 
+    private $forum_post_like = 'forum_post_like';
+
     public function __construct(){
         // add nrw forum post
         add_action("wp_ajax_{$this->add_forum_post}", [ $this, 'add_new_forum_post' ] );
@@ -43,6 +45,10 @@ class Ajax_Handle{
         // update user profile
         add_action("wp_ajax_{$this->real_time_status}", [ $this, 'real_time_status' ] );
         add_action("wp_ajax_nopriv_{$this->real_time_status}", [ $this, 'real_time_status' ] );
+
+        // update user profile
+        add_action("wp_ajax_{$this->forum_post_like}", [ $this, 'forum_post_like' ] );
+        add_action("wp_ajax_nopriv_{$this->forum_post_like}", [ $this, 'forum_post_like' ] );
     }
 
     /**
@@ -280,5 +286,60 @@ class Ajax_Handle{
         }
 
         wp_send_json_success( $user_statuses );
+    }
+
+    /**
+     * doing forum post like.
+     *
+     * @return void
+     */
+    public function forum_post_like(){
+        if ( ! defined('DOING_AJAX') || ! DOING_AJAX ){
+            wp_send_json_error( 'Invalid AJAX request.' );
+        }
+
+        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'forum_nonce_like' ) ) {
+            wp_send_json_error( 'Nonce verification failed.' );
+        }
+
+        if ( ! is_user_logged_in() ) {
+            wp_send_json_error( 'User not logged in.' );
+        }
+
+        $post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0;
+
+        if ( $post_id === 0 ){
+            wp_send_json_error( 'Post id is invalid.' );
+        }
+
+        $user_id    = get_current_user_id();
+        $liked_post = get_user_meta( $user_id, 'liked_posts', true );
+
+        if( ! $liked_post ){
+            $liked_post = [];
+        }
+
+        $liked_class = get_user_meta( $user_id, 'liked_class', true );
+        if( ! $liked_class ){
+            $liked_class = [];
+        }
+
+        if( in_array( $post_id, $liked_post ) ){
+            wp_send_json_error( 'User already like this post.' );
+        }
+        if( in_array( $post_id, $liked_class ) ){
+            wp_send_json_error( 'Already added class.' );
+        }
+
+        $like_count = intval( get_post_meta( $post_id, 'like_count', true ) );
+        $like_count++;
+        update_post_meta($post_id, 'like_count', $like_count);
+        update_post_meta( $post_id, 'liked_class', 'liked' );
+
+
+        $liked_posts[] = $post_id;
+        update_user_meta( $user_id, 'liked_posts', $liked_posts );
+        
+        wp_send_json_success( 'Post liked successfully.' );
     }
 }
