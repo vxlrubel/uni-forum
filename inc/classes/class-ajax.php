@@ -127,6 +127,10 @@ class Ajax_Handle{
             wp_send_json_error( 'Invalid AJAX request.' );
         }
 
+        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'forum_nonce_delete' ) ) {
+            wp_send_json_error( 'Nonce verification failed.' );
+        }
+
         $post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : '';
 
         if( empty( $post_id ) ){
