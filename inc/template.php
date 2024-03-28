@@ -106,7 +106,15 @@ function uf_get_forum_posts( int $author_id = null ){
                             $liked_class = in_array($post_id, $liked_posts) ? 'liked' : '';
                         ?>
                         <button type="button" class="button like <?php echo $liked_class; ?>">
-                            <span class="like-count"><?php echo get_post_meta($post_id, 'like_count', true); ?></span>
+                            <span class="like-count">
+                                <?php
+                                    $get_liked_count = get_row_count( $post_id );
+                                    if( $get_liked_count == false ){
+                                        $get_liked_count ='';
+                                    }
+                                    echo $get_liked_count;
+                                 ?>
+                            </span>
                             <span class="like-text">
                                 <?php
                                     if( $liked_class == 'liked' ){
