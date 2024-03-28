@@ -38,6 +38,20 @@ function uf_profile_name( $author_id ){
 }
 
 /**
+ * get row count of liked or dislike.
+ *
+ * @return $count
+ */
+function get_row_count( $post_id ){
+    global $wpdb;
+    $table = $wpdb->prefix . 'uf_likes';
+    $sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE post_id = %d", $post_id );
+    // Execute the SQL query
+    $count = $wpdb->get_var( $sql );
+    return $count;
+}
+
+/**
  * retrive the forum post item
  *
  * @param [type] $author_id
