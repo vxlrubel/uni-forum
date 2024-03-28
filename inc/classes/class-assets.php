@@ -61,6 +61,7 @@ class Assets{
             'nonce_delete' => wp_create_nonce( 'forum_nonce_delete' ),
             'nonce_edit'   => wp_create_nonce( 'forum_nonce_edit' ),
             'nonce_update' => wp_create_nonce( 'forum_nonce_update' ),
+            'nonce_like'   => wp_create_nonce( 'forum_nonce_like' ),
         ];
         
         wp_localize_script( 'uni-forum-script', 'UF', $args );
