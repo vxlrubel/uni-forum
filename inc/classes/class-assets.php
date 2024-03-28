@@ -54,7 +54,10 @@ class Assets{
         }
 
         $args = [
-            'ajax_url' => admin_url( 'admin-ajax.php' )
+            'ajax_url'     => admin_url( 'admin-ajax.php' ),
+            'nonce_delete' => wp_create_nonce( 'forum_nonce_delete' ),
+            'nonce_edit'   => wp_create_nonce( 'forum_nonce_edit' ),
+            'nonce_update' => wp_create_nonce( 'forum_nonce_update' ),
         ];
         
         wp_localize_script( 'uni-forum-script', 'UF', $args );
