@@ -51,13 +51,22 @@ class Ajax_Handle{
      * @return void
      */
     public function add_new_forum_post(){
+        $this->add_post('add_new_forum_post');
+    }
+
+    /**
+     * add forum post
+     *
+     * @return void
+     */
+    private function add_post( $nonce_action ){
         if ( ! defined('DOING_AJAX') || ! DOING_AJAX ){
             wp_send_json_error( 'Invalid AJAX request.' );
         }
 
         $nonce = sanitize_text_field( $_POST['security'] );
 
-        if ( ! wp_verify_nonce( $nonce, 'add_new_forum_post' ) ) {
+        if ( ! wp_verify_nonce( $nonce, $nonce_action ) ) {
             wp_send_json_error( 'Nonce verification failed.' );
             wp_die();
         }
