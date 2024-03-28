@@ -72,7 +72,33 @@
 
         // create forum pages
         register_activation_hook( __FILE__, [ $this, 'create_forum_pages'] );
+
+        // create database table
+        register_activation_hook( __FILE__, [ $this, 'uf_likes'] );
     }
+
+    /**
+     * create database table called uf_likes
+     *
+     * @return void
+     */
+    public function uf_likes(){
+        global $wpdb;
+        $table           = $wpdb->prefix . 'uf_likes';
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $sql   = "CREATE TABLE IF NOT EXISTS $table(
+            id INT NOT NULL AUTO_INCREMENT,
+            user_id INT NOT NULL,
+            post_id INT NOT NULL,
+            like_status BOOLEAN DEFAULT FALSE,
+            PRIMARY KEY (id),
+            UNIQUE KEY unique_user_post (user_id, post_id)
+        ) $charset_collate;";
+
+        $wpdb->query( $sql );
+    }
+    
 
     /**
      * create forum pages when activate the plugin
