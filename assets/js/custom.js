@@ -254,17 +254,13 @@
         }
 
         doingAjaxLikeInForumPost(){
-            $('.forum-wrap').on('click', 'button.button.like', function(e){
+            $('.forum-wrap').on('click', 'button.button.button-like', function(e){
                 e.preventDefault();
                 let _self  = $(this);
                 let postId = parseInt(_self.closest('li').data('item'));
                 
-                if( _self.hasClass('liked') ){
-                    alert('You already liked this post.');
-                    return;
-                }
                 let data = {
-                    action : 'forum_post_like',
+                    action : 'like_forum_post',
                     post_id: postId,
                     nonce  : nonce_like
                 }
@@ -277,23 +273,20 @@
                         _self.children('span.like-text').text('Liking...');
                     },
                     success   : ( res ) => {
-                        if( ! res.success ) {
-                            return;
+                        let count = ''
+                        if( res.data.count > 0 ) {
+                            count = res.data.count;
                         }
-                        let likeCount = parseInt(_self.children('span.like-count').text());
-                        _self.addClass('liked').children('span.like-text').text('Liked');
-
-                        // console.log( typeof likeCount + likeCount )
-                        if( ! likeCount ){
-                            likeCount = 0;
+                        _self.children('span.like-count').text( count );
+                        _self.children('span.like-text').text(res.data.text);
+                        if( res.data.class == '' ) {
+                            _self.removeClass('liked')
+                        }else{
+                            _self.addClass( res.data.class );
                         }
-                        
-                        _self.children('span.like-count').text( likeCount + 1 );
-
-                        console.log(res.data)
                     }
                 });
-            })
+            });
         }
         
     }
