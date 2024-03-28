@@ -52,7 +52,8 @@ $registration_date = date( 'd M, Y | H:i:s', strtotime( $get_registration_date )
         <form action="" class="add-new-forum" id="add-new-forum-post">
             <input type="text" name="forum_tite" placeholder="Forum Title">
             <textarea name="forum_content" placeholder="Write content"></textarea>
-            <input type="hidden" id="forum_nonce" name="forum_nonce" value="fe4c378ab7"><input type="hidden" name="_wp_http_referer" value="/dev/render-forum/">            <div class="text-right">
+            <?php wp_nonce_field( 'add_new_forum_post', 'forum_nonce' ); ?>
+            <div class="text-right">
                 <input type="submit" class="button-submit" value="Publish">
             </div>
         </form>
