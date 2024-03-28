@@ -134,7 +134,8 @@
                     action : 'update_forum_post_by_id',
                     post_id: forumId,
                     title  : title,
-                    content: excerpt
+                    content: excerpt,
+                    nonce  : nonce_update
                 }
 
                 $.ajax({
