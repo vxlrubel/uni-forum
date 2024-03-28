@@ -52,6 +52,26 @@ function get_row_count( $post_id ){
 }
 
 /**
+ * create a funciton to check that user is doing like or not.
+ *
+ * @return $status
+ */
+function is_user_doing_like( $post_id, $current_user_id ){
+    global $wpdb;
+    $table  = $wpdb->prefix . 'uf_likes';
+    $sql    = $wpdb->prepare( "SELECT * FROM $table WHERE post_id = %d AND user_id = %d", $post_id, $current_user_id );
+    $result = $wpdb->get_results( $sql );
+
+    $text = 'like';
+
+    if( count( $result ) == 1 ){
+        $text = 'liked';
+    }
+    
+    return $text;
+}   
+
+/**
  * retrive the forum post item
  *
  * @param [type] $author_id
@@ -100,12 +120,7 @@ function uf_get_forum_posts( int $author_id = null ){
                     <p class="text-uf-default"><?php echo esc_html( $trimmed_content ); ?></p>
                     <a href="<?php the_permalink(); ?>" class="permalink">Read More</a>
                     <div class="forum-footer">
-                        <?php
-                            $user_id     = get_current_user_id();
-                            $liked_posts = get_user_meta( $user_id, 'liked_posts', true );
-                            $liked_class = in_array($post_id, $liked_posts) ? 'liked' : '';
-                        ?>
-                        <button type="button" class="button like <?php echo $liked_class; ?>">
+                        <button type="button" class="button button-like <?php echo is_user_doing_like( $post_id, get_current_user_id() ); ?>">
                             <span class="like-count">
                                 <?php
                                     $get_liked_count = get_row_count( $post_id );
@@ -117,11 +132,8 @@ function uf_get_forum_posts( int $author_id = null ){
                             </span>
                             <span class="like-text">
                                 <?php
-                                    if( $liked_class == 'liked' ){
-                                        echo 'Liked';
-                                    }else{
-                                        echo 'Like';
-                                    }
+                                    $like = is_user_doing_like( $post_id, get_current_user_id() );
+                                    echo $like;
                                 ?>
                             </span>
                         </button>

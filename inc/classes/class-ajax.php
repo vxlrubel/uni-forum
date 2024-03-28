@@ -19,7 +19,7 @@ class Ajax_Handle{
 
     private $real_time_status = 'user_real_time_status';
 
-    private $forum_post_like = 'forum_post_like';
+    private $like_forum_post = 'like_forum_post';
 
     public function __construct(){
         // add nrw forum post
@@ -47,8 +47,8 @@ class Ajax_Handle{
         add_action("wp_ajax_nopriv_{$this->real_time_status}", [ $this, 'real_time_status' ] );
 
         // update user profile
-        add_action("wp_ajax_{$this->forum_post_like}", [ $this, 'forum_post_like' ] );
-        add_action("wp_ajax_nopriv_{$this->forum_post_like}", [ $this, 'forum_post_like' ] );
+        add_action("wp_ajax_{$this->like_forum_post}", [ $this, 'like_forum_post' ] );
+        add_action("wp_ajax_nopriv_{$this->like_forum_post}", [ $this, 'like_forum_post' ] );
     }
 
     /**
@@ -293,7 +293,11 @@ class Ajax_Handle{
      *
      * @return void
      */
-    public function forum_post_like(){
+    public function like_forum_post(){
+
+        global $wpdb;
+        $table = $wpdb->prefix . 'uf_likes';
+
         if ( ! defined('DOING_AJAX') || ! DOING_AJAX ){
             wp_send_json_error( 'Invalid AJAX request.' );
         }
@@ -313,23 +317,48 @@ class Ajax_Handle{
         }
 
         $user_id    = get_current_user_id();
-        $liked_post = get_user_meta( $user_id, 'liked_posts', true );
 
-        if( ! $liked_post ){
-            $liked_post = [];
+        $data = [
+            'user_id'     => (int)$user_id,
+            'post_id'     => (int)$post_id,
+            'like_status' => true,
+        ];
+
+        $data_format = [ '%d', '%d', '%d' ];
+
+        $result = $wpdb->insert( $table, $data, $data_format );
+
+        if ( $result === false ) {
+            $where_clause = [
+                'user_id'     => (int)$user_id,
+                'post_id'     => (int)$post_id,
+            ];
+            $where_format = [ '%d', '%d' ];
+
+            $update_result = $wpdb->delete( $table, $where_clause, $where_format );
+
+            if( false === $update_result ) {
+                wp_send_json_error( 'Something went wrong...' );
+            }
+
+            $count = get_row_count( $post_id );
+
+            $response_data = [
+                'text'  => 'Like',
+                'count' => $count,
+                'class' => '',
+            ];
+            wp_send_json_success( $response_data );
+        } else {
+            // Insertion successful
+            $count = get_row_count( $post_id );
+
+            $response_data = [
+                'text'  => 'Liked',
+                'count' => $count,
+                'class' => 'liked',
+            ];
+            wp_send_json_success( $response_data );
         }
-
-        if( in_array( $post_id, $liked_post ) ){
-            wp_send_json_error( 'User already like this post.' );
-        }
-
-        $like_count = intval( get_post_meta( $post_id, 'like_count', true ) );
-        $like_count++;
-        update_post_meta($post_id, 'like_count', $like_count);
-
-        $liked_posts[] = $post_id;
-        update_user_meta( $user_id, 'liked_posts', $liked_posts );
-        
-        wp_send_json_success( 'Post liked successfully.' );
     }
 }
