@@ -86,9 +86,20 @@ function uf_get_forum_posts( int $author_id = null ){
                     <p class="text-uf-default"><?php echo esc_html( $trimmed_content ); ?></p>
                     <a href="<?php the_permalink(); ?>" class="permalink">Read More</a>
                     <div class="forum-footer">
-                        <button type="button" class="button like">
-                            <span class="like-count"></span>
-                            <span class="like-text">Like</span>
+                        <?php
+                            $like_class = get_post_meta($post_id, 'liked_class', true );
+                        ?>
+                        <button type="button" class="button like <?php echo $like_class; ?>">
+                            <span class="like-count"><?php echo get_post_meta($post_id, 'like_count', true); ?></span>
+                            <span class="like-text">
+                                <?php
+                                    if( $like_class == 'liked' ){
+                                        echo 'liked';
+                                    }else{
+                                        echo 'like';
+                                    }
+                                ?>
+                            </span>
                         </button>
                         <button type="button" class="button comment">
                         <?php 
