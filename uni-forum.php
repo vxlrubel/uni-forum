@@ -250,6 +250,9 @@
         define( 'UF_ASSETS', trailingslashit( plugins_url( 'assets', __FILE__ ) ) );
         define( 'UF_ASSETS_CSS', trailingslashit( UF_ASSETS . 'css' ) );
         define( 'UF_ASSETS_JS', trailingslashit( UF_ASSETS . 'js' ) );
+        define( 'UF_ASSETS_ADMIN', trailingslashit( UF_ASSETS . 'admin' ) );
+        define( 'UF_ASSETS_ADMIN_CSS', trailingslashit( UF_ASSETS_ADMIN . 'css' ) );
+        define( 'UF_ASSETS_ADMIN_JS', trailingslashit( UF_ASSETS_ADMIN . 'js' ) );
     }
 
     /**
