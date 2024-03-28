@@ -130,7 +130,7 @@ function uf_get_forum_posts( int $author_id = null ){
                                     echo $get_liked_count;
                                  ?>
                             </span>
-                            <span class="like-text">
+                            <span class="like-text text-capitalize">
                                 <?php
                                     $like = is_user_doing_like( $post_id, get_current_user_id() );
                                     echo $like;
