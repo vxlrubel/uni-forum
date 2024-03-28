@@ -155,6 +155,10 @@ class Ajax_Handle{
         if ( ! defined('DOING_AJAX') || ! DOING_AJAX ){
             wp_send_json_error( 'Invalid AJAX request.' );
         }
+        
+        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'forum_nonce_edit' ) ) {
+            wp_send_json_error( 'Nonce verification failed.' );
+        }
 
         $post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : '';
 

@@ -68,7 +68,8 @@
 
                 let data = {
                     action : 'fetch_forum_post_by_id',
-                    post_id: id
+                    post_id: id,
+                    nonce  : nonce_edit
                 }
                 
                 $.ajax({
