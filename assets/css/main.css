@@ -91,6 +91,9 @@
 .p-20{
     padding: 20px;
 }
+.text-capitalize{
+    text-transform: capitalize !important;
+}
 .button-submit{
     display: inline-block;
     padding: 7px 25px;
@@ -317,6 +320,16 @@ textarea.uf-field {
 }
 .uf-button.close:hover{
     background-color: var(--color-uf-red-deep);
+}
+
+.button.button-like.liked{
+    background-color: var(--color-uf-primary);
+}
+.button.button-like.liked:hover{
+    background-color: var(--color-uf-primary-hover) !important;
+}
+.button.button-like.liked > * {
+    color: var(--color-uf-white) !important;
 }
 
 /*****************************************************/
