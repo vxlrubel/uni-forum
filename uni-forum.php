@@ -75,6 +75,32 @@
 
         // create database table
         register_activation_hook( __FILE__, [ $this, 'uf_likes'] );
+
+        // add plugins actions link
+        add_filter( 'plugin_action_links', [ $this, 'action_links' ], 10, 2 );
+    }
+
+    /**
+     * Add plugin actions link. It's showwing the plugin list below the plugin.
+     *
+     * @param [type] $links
+     * @param [type] $file
+     * @return $links
+     */
+    public function action_links( $links, $file ){
+
+        if( $file === plugin_basename( __FILE__ ) ){
+
+            $elements = sprintf(
+                '<a href="%1$s">%2$s</a>',
+                esc_url( admin_url( '/edit.php?post_type=forum&page=forum-settings' ) ),
+                __( 'Settings', 'uni-forum' )
+            );
+
+            array_unshift( $links, $elements );
+        }
+        
+        return $links;
     }
 
     /**
