@@ -31,10 +31,7 @@ class Admin_Menu{
      *
      * @return void
      */
-    public function settings_page(){ ?>
-        <div class="wrap">
-            <h1>Forum Settings</h1>
-        </div>
-        <?php
+    public function settings_page(){ 
+        require_once dirname( __FILE__) . '/admin-display-options.php';
     }
 }
