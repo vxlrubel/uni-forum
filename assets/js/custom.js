@@ -26,37 +26,48 @@
         deleteForumPost(){
             $('.forum-wrap').on('click', 'button.button.delete', function(e){
                 e.preventDefault();
-                let item   = $(this).closest('li');
+                let _this  = $(this);
+                let item   = _this.closest('li');
                 let postID = parseInt(item.data('item'));
+                let title  = _this.closest('li').find('.forum-title').text();
 
-                if( ! confirm('Are you sure?') ){
-                    return;
-                }
+                getConfirmAlert( title );
 
-                let data = {
-                    action : 'delete_forum_post',
-                    post_id: postID,
-                    nonce  : nonce_delete
-                }
-                
-                $.ajax({
-                    type      : 'POST',
-                    url       : ajaxUrl,
-                    data      : data,
-                    beforeSend: ()=>{
-                        $(this).text('Deleting...');
-                    },
-                    success   : ( response )=>{
-                        let receiveData = response.data;
-                        if( receiveData.status == 200 ){
-                            item.css('background-color', '#f53b57').fadeOut(300, ()=>item.remove());
-                        }else{
-                            console.log( receiveData );
+                $('body').on('click', 'button[data-confirm]', function(e){
+                    e.preventDefault();
+                    let _self = $(this);
+                    let alertBox = _self.closest('.uf-reset.uf-confirm');
+                    let selfValue = _self.data('confirm');
+                    if( selfValue == 'yes' ){
+                        alertBox.fadeOut(300, ()=>alertBox.remove());
+                        let data = {
+                            action : 'delete_forum_post',
+                            post_id: postID,
+                            nonce  : nonce_delete
                         }
-                    },
-                    error     : ( error )=>{
-                        console.log( 'Error:', error );
-                    },
+                        
+                        $.ajax({
+                            type      : 'POST',
+                            url       : ajaxUrl,
+                            data      : data,
+                            beforeSend: ()=>{
+                                _this.text('Deleting...');
+                            },
+                            success   : ( response )=>{
+                                let receiveData = response.data;
+                                if( receiveData.status == 200 ){
+                                    item.css('background-color', '#f53b57').fadeOut(300, ()=>item.remove());
+                                }else{
+                                    console.log( receiveData );
+                                }
+                            },
+                            error     : ( error )=>{
+                                console.log( 'Error:', error );
+                            },
+                        });
+                    }else{
+                        alertBox.fadeOut(300, ()=>alertBox.remove());
+                    }
                 });
             });
         }
@@ -388,6 +399,28 @@
                 },
             });
         });
+    }
+
+    const getConfirmAlert = ( title )=>{
+        let html = `
+        <div class="uf-reset uf-confirm">
+            <div class="uf-confirm-box">
+                <div class="confirm-head">
+                    <h2>Confirmation</h2>
+                </div>
+                <div class="confirm-body">
+                    <span>Are you sure to delete?</span>
+                    <div class="get-title">${title}</div>
+                </div>
+                <div class="confirm-footer">
+                    <button class="button" data-confirm="yes">Yes</button>
+                    <button class="button" data-confirm="no">No</button>
+                </div>
+            </div>
+        </div>
+        `;
+        let data = $('body').prepend( html );
+        return data;
     }
 
     doc.ready(()=>{
