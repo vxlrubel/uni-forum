@@ -78,6 +78,30 @@
 
         // add plugins actions link
         add_filter( 'plugin_action_links', [ $this, 'action_links' ], 10, 2 );
+
+        add_filter( 'plugin_row_meta', [ $this, 'add_row_meta' ], 10, 2 );
+    }
+
+    /**
+     * Filters the array of row meta for each plugin in the Plugins list table.
+     *
+     * @param array $plugin_meta
+     * @param [type] $plugin_file
+     * @return void
+     */
+    public function add_row_meta( array $plugin_meta, $plugin_file ){
+
+        if( $plugin_file !== plugin_basename( __FILE__ ) ){
+            return $plugin_meta;
+        }
+        
+        $plugin_meta[] = sprintf(
+            '<a href="%1$s" target="_blank"><span class="dashicons dashicons-star-filled" style="font-size:13px;margin-top:3px;"></span>%2$s</a>',
+            'https://github.com/vxlrubel/uni-forum',
+            __( 'Documentation', 'uni-forum' )
+        );
+
+        return $plugin_meta;
     }
 
     /**
