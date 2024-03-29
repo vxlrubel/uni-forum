@@ -362,3 +362,67 @@ textarea.uf-field {
 	font-weight: 600;
 	font-size: 15px;
 }
+
+
+/*****************************************************/
+/****************** Delete Popup  ********************/
+/*****************************************************/
+
+.uf-reset.uf-confirm {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 9999;
+	background: rgba(0, 0, 0, 0.5);
+}
+.uf-confirm-box {
+	width: calc(100% - 30px);
+	max-width: 350px;
+	background: var(--color-uf-white);
+	margin: 100px auto auto;
+	box-sizing: border-box;
+}
+.uf-confirm-box [class*="confirm-"] {
+    padding: 15px;
+}
+.uf-confirm-box [class*="confirm-"] h2 {
+	margin: 0;
+	font-size: 16px !important;
+	font-weight: 600;
+	color: var(--color-uf-primary-hover) !important;
+}
+.uf-confirm-box [class*="confirm-"] span {
+	display: inline-block;
+	margin-bottom: 5px;
+	font-weight: 600;
+	color: var(--color-uf-primary-hover) !important;
+}
+.uf-confirm-box .confirm-head,
+.uf-confirm-box .confirm-footer{
+    background-color: #ececec;
+}
+.uf-confirm-box .confirm-footer {
+    text-align: right;
+}
+.uf-confirm-box .confirm-footer .button {
+    width: 60px;
+    color: var(--color-uf-white) !important;
+}
+.uf-confirm-box .confirm-footer .button[data-confirm="yes"]{
+    background-color: var(--color-uf-primary);
+    border-color: var(--color-uf-primary);
+}
+.uf-confirm-box .confirm-footer .button[data-confirm="yes"]:hover{
+    background-color: var(--color-uf-primary-hover) !important;
+    border-color: var(--color-uf-primary-hover);
+}
+.uf-confirm-box .confirm-footer .button[data-confirm="no"]{
+    background-color: var(--color-uf-red);
+    border-color: var(--color-uf-red);
+}
+.uf-confirm-box .confirm-footer .button[data-confirm="no"]:hover{
+    background-color: var(--color-uf-red-deep) !important;
+    border-color: var(--color-uf-red-deep);
+}
