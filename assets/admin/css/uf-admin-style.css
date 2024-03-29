@@ -1,0 +1,81 @@
+:root{
+    --color-uf-default : #34495e;
+    --color-uf-red : #ef5777;
+    --color-uf-red-deep : #f53b57;
+    --color-uf-primary : #273c75;
+    --color-uf-primary-hover : #192a56;
+    --color-uf-border: #c8d6e5;
+    --color-uf-white: #ffffff;
+    --color-uf-focus: #dff9fb;
+    --color-uf-button: ##dfe4ea;
+    --color-uf-button-hover: #ced6e0;
+    --color-uf-active: #2ed573;
+    --color-uf-title: #0a3d62;
+}
+.uf-reset,
+.uf-reset::after,
+.uf-reset::before,
+.uf-reset *,
+.uf-reset *::after,
+.uf-reset *::before{
+    box-sizing: border-box !important;
+    font-size: 14px;
+    color: var(--color-uf-default);
+    font-family: sans-serif;
+}
+.text-right{
+    text-align: right !important;
+}
+.border{
+    border: 1px solid var(--color-uf-border);
+}
+.p-20{
+    padding: 20px;
+}
+.text-capitalize{
+    text-transform: capitalize !important;
+}
+
+/**************************************************/
+/****************** Setting OPtions ***************/
+/**************************************************/
+.uni-settings-title {
+	padding: 15px !important;
+	background: var(--color-uf-primary);
+	color: var(--color-uf-white);
+	font-size: 20px !important;
+	margin-bottom: 15px !important;
+}
+.uf-settings-parent{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.uf-settings-parent [class^="options-"] {
+    width: 100%;
+    margin-bottom: 20px;
+}
+@media(min-width: 720px) {
+    .uf-settings-parent{
+        flex-wrap: nowrap;
+    }
+    .uf-settings-parent [class^="options-"] {
+        margin-bottom: 0;
+    }
+    .uf-settings-parent .options-settings{
+        max-width: calc(100% - 330px);
+    }
+    .uf-settings-parent .options-author{
+        max-width: 300px;
+        margin-left: 30px;
+    }
+}
+
+.uf-reset .inner-title {
+	margin: 0 0 15px;
+	padding: 15px;
+	background: var;
+	background: var(--color-uf-primary);
+	color: var(--color-uf-white);
+	text-transform: uppercase;
+}
