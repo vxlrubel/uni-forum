@@ -111,7 +111,7 @@
      * @param [type] $file
      * @return $links
      */
-    public function action_links( $links, $file ){
+    public function action_links( array $links, $file ){
 
         if( $file === plugin_basename( __FILE__ ) ){
 
