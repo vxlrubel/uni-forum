@@ -102,8 +102,8 @@
         }
         
         $plugin_meta[] = sprintf(
-            '<a href="%1$s" target="_blank"><span class="dashicons dashicons-star-filled" style="font-size:13px;margin-top:3px;"></span>%2$s</a>',
-            'https://github.com/vxlrubel/uni-forum',
+            '<a href="%1$s" target="_blank"><span class="dashicons dashicons-media-document" style="font-size:13px;margin-top:4px;"></span>%2$s</a>',
+            'https://github.com/vxlrubel/uni-forum/wiki',
             __( 'Documentation', 'uni-forum' )
         );
 
