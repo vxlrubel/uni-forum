@@ -21,6 +21,7 @@
  use UniForum\Inc\Classes\Ajax_Handle;
  use UniForum\Inc\Classes\Assets;
  use UniForum\Inc\Classes\Admin_Menu;
+ use UniForum\Inc\Classes\Admin_Ajax;
 
  if ( file_exists( dirname(__FILE__) . '/inc/autoload.php' ) ){
     require_once dirname(__FILE__) . '/inc/autoload.php';
@@ -58,6 +59,11 @@
 
         // create admin menu to modify the setings of the forum post
         new Admin_Menu;
+
+        // handle admin ajax require
+        if( is_admin() ){
+            new Admin_Ajax;
+        }
 
         // register new user
         add_action( 'admin_post_uf_user_registration', [ $this, 'register_new_user' ] );
