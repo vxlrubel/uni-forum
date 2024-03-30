@@ -31,7 +31,7 @@ Contributions are welcome! If you'd like to contribute to the development of Uni
 
 ## Support
 
-For support or inquiries, please contact [support@example.com](mailto:support@example.com).
+For support or inquiries, please contact [vxlrubel@gmail.com](mailto:vxlrubel@gmail.com).
 
 ## License
 
