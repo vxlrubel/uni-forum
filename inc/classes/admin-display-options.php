@@ -32,6 +32,9 @@ defined('ABSPATH') || exit;
                         </tr>
                     </tbody>
                 </table>
+
+                <input type="hidden" name="action" value="uf_update_settings_options">
+                <?php wp_nonce_field( 'update_settings_options', 'update_forum_nonce' ); ?>
                 <p class="submit">
                     <input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes">
                 </p>
