@@ -9,6 +9,7 @@ $files = [
     'classes/class-ajax',
     'classes/class-shortcode',
     'classes/class-admin-menu',
+    'classes/class-admin-ajax',
 ];
 
 foreach ( $files as $file ) {
