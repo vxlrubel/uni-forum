@@ -78,9 +78,10 @@ function is_user_doing_like( int $post_id, int $current_user_id ){
  * @return void
  */
 function uf_get_forum_posts( int $author_id = null ){
+    $get_option =  get_option( 'uf_settings_post_per_page', 10 );
     $args1 = [
         'post_type'      => 'forum',
-        'posts_per_page' => 10,
+        'posts_per_page' => (int)$get_option,
         'paged'          => get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1,
     ];
 
