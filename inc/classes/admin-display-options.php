@@ -18,21 +18,23 @@ defined('ABSPATH') || exit;
                             </th>
                             <td>
                                 <select name="post_per_page" id="post-per-page" class="regular-text">
-                                    <option value="10">--Select Default--</option>
-                                    <option value="15">15</option>
-                                    <option value="20">20</option>
-                                    <option value="25">25</option>
-                                    <option value="30">30</option>
-                                    <option value="35">35</option>
-                                    <option value="40">40</option>
-                                    <option value="45">45</option>
-                                    <option value="50">50</option>
+                                    <?php
+                                        $get_option =  get_option( 'uf_settings_post_per_page', 10 );
+                                    ?>
+                                    <option value="10" <?php selected( 10, $get_option, true ); ?>>--Select Default--</option>
+                                    <option value="15" <?php selected( 15, $get_option, true ); ?>>15</option>
+                                    <option value="20" <?php selected( 20, $get_option, true ); ?>>20</option>
+                                    <option value="25" <?php selected( 25, $get_option, true ); ?>>25</option>
+                                    <option value="30" <?php selected( 30, $get_option, true ); ?>>30</option>
+                                    <option value="35" <?php selected( 35, $get_option, true ); ?>>35</option>
+                                    <option value="40" <?php selected( 40, $get_option, true ); ?>>40</option>
+                                    <option value="45" <?php selected( 45, $get_option, true ); ?>>45</option>
+                                    <option value="50" <?php selected( 50, $get_option, true ); ?>>50</option>
                                 </select>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-
                 <input type="hidden" name="action" value="uf_update_settings_options">
                 <?php wp_nonce_field( 'update_settings_options', 'update_forum_nonce' ); ?>
                 <p class="submit">
