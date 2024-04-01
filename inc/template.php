@@ -204,3 +204,36 @@ function uf_get_forum_posts( int $author_id = null ){
         printf( '<h3>%s</h3>', 'No Posts Available' );
     endif;
 }
+
+/**
+ * get user registration date
+ *
+ * @param [type] $user_id
+ * @return void
+ */
+function get_user_registration_date( $user_id ) {
+    // Check if the registration date is cached
+    $cache_key         = 'user_registration_date_' . $user_id;
+    $registration_date = wp_cache_get( $cache_key, 'user_registration_dates' );
+
+    // If cached data is available, return it
+    if ( false !== $registration_date ) {
+        return $registration_date;
+    }
+
+    global $wpdb;
+
+    // Retrieve registration date from the database
+    $registration_date = $wpdb->get_var( $wpdb->prepare(
+        "SELECT user_registered FROM {$wpdb->users} WHERE ID = %d",
+        $user_id
+    ) );
+
+    // Convert the registration date to UTC
+    $registration_date_utc = gmdate( 'd M, Y | H:i:s', strtotime( $registration_date ) );
+
+    // Cache the registration date
+    wp_cache_set( $cache_key, $registration_date_utc, 'user_registration_dates' );
+
+    return $registration_date_utc;
+}
