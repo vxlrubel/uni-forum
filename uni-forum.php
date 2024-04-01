@@ -202,7 +202,6 @@
                 esc_html( $min_required_version ),
                 esc_url (admin_url( 'update-core.php' ) )
             );
-
             printf( '<div class="notice notice-error is-dismissible"><p>%s</p></div>', wp_kses_post( $notice ) );
         }
     }
