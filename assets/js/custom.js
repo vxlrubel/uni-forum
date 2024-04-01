@@ -193,7 +193,8 @@
                     action: 'update_user_profile',
                     id    : id,
                     f_name: fName,
-                    l_name: lName
+                    l_name: lName,
+                    nonce : nonce_update
                 }
                 
                 $.ajax({

@@ -233,7 +233,11 @@ class Ajax_Handle{
         if ( ! defined('DOING_AJAX') || ! DOING_AJAX ){
             wp_send_json_error( 'Invalid AJAX request.' );
         }
-    
+
+        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'forum_nonce_update' ) ) {
+            wp_send_json_error( 'Nonce verification failed.' );
+        }
+        
         $user_id    = $_POST['id'];
         $first_name = isset( $_POST['f_name'] ) ? sanitize_text_field( $_POST['f_name'] ) : '';
         $last_name  = isset( $_POST['l_name'] ) ? sanitize_text_field( $_POST['l_name'] ) : '';
