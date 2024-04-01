@@ -142,17 +142,15 @@
         global $wpdb;
         $table           = $wpdb->prefix . 'uf_likes';
         $charset_collate = $wpdb->get_charset_collate();
-
-        $sql   = "CREATE TABLE IF NOT EXISTS {$table}(
+        
+        $wpdb->query( $wpdb->prepare( "CREATE TABLE IF NOT EXISTS {$table}(
             id INT NOT NULL AUTO_INCREMENT,
             user_id INT NOT NULL,
             post_id INT NOT NULL,
             like_status BOOLEAN DEFAULT FALSE,
             PRIMARY KEY (id),
             UNIQUE KEY unique_user_post (user_id, post_id)
-        ) {$charset_collate};";
-
-        $wpdb->query( $sql );
+        ) {$charset_collate};" ) );
     }
     
 
