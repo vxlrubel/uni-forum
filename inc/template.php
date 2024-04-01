@@ -34,7 +34,7 @@ function uf_profile_name( int $author_id ){
     }else{
         $profile_name = $display_name;
     }
-    echo $profile_name;
+    echo esc_html( $profile_name );
 }
 
 /**
@@ -45,9 +45,7 @@ function uf_profile_name( int $author_id ){
 function get_row_count( int $post_id ){
     global $wpdb;
     $table = $wpdb->prefix . 'uf_likes';
-    $sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE post_id = %d", $post_id );
-    // Execute the SQL query
-    $count = $wpdb->get_var( $sql );
+    $count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE post_id = %d", $post_id ) );
     return $count;
 }
 
@@ -121,20 +119,20 @@ function uf_get_forum_posts( int $author_id = null ){
                     <p class="text-uf-default"><?php echo esc_html( $trimmed_content ); ?></p>
                     <a href="<?php the_permalink(); ?>" class="permalink">Read More</a>
                     <div class="forum-footer">
-                        <button type="button" class="button button-like <?php echo is_user_doing_like( $post_id, get_current_user_id() ); ?>">
+                        <button type="button" class="button button-like <?php echo esc_attr( is_user_doing_like( $post_id, get_current_user_id() ) ); ?>">
                             <span class="like-count">
                                 <?php
                                     $get_liked_count = get_row_count( $post_id );
                                     if( $get_liked_count == false ){
                                         $get_liked_count ='';
                                     }
-                                    echo $get_liked_count;
+                                    echo esc_html( $get_liked_count );
                                  ?>
                             </span>
                             <span class="like-text text-capitalize">
                                 <?php
                                     $like = is_user_doing_like( $post_id, get_current_user_id() );
-                                    echo $like;
+                                    echo esc_html( $like );
                                 ?>
                             </span>
                         </button>
@@ -147,7 +145,7 @@ function uf_get_forum_posts( int $author_id = null ){
                             }else{
                                 $comment_text = $comment_count .' Comments';
                             }
-                            echo $comment_text;
+                            echo esc_html( $comment_text );
                          ?>
                         </button>
                     </div>
@@ -165,7 +163,7 @@ function uf_get_forum_posts( int $author_id = null ){
         $pagination .= paginate_links( $paginate_args );
         $pagination .= '</li>';
 
-        echo $pagination;
+        echo esc_html( $pagination );
 
         wp_reset_postdata();
 
