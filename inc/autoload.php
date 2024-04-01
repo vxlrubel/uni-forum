@@ -17,6 +17,6 @@ foreach ( $files as $file ) {
         require_once dirname( __FILE__ ) . '/' . $file . '.php';
     }else{
         $not_found = dirname(__FILE__) . '/' . $file . '.php';
-        throw new Exception("file not found {$not_found}", 1);
+        throw new Exception('file not found' . esc_html( $not_found ));
     }
 }
