@@ -4,22 +4,14 @@
 defined('ABSPATH') || exit;
 
 global $wpdb;
-$current_user = wp_get_current_user();
-$first_name   = $current_user->first_name;
-$last_name    = $current_user->last_name;
-$display_name = $current_user->display_name;
-$user_email   = $current_user->user_email;
-$current_url  = esc_url( home_url( $_SERVER['REQUEST_URI'] ) );
-$logout_url   = wp_logout_url( $current_url );
-
-$get_registration_date = $wpdb->get_var( $wpdb->prepare(
-    "SELECT user_registered FROM {$wpdb->users} WHERE ID = %d",
-    $current_user->ID
-) );
-
-// Convert the registration date to UTC
-$registration_date = gmdate( 'd M, Y | H:i:s', strtotime( $get_registration_date ) );
-
+$current_user      = wp_get_current_user();
+$first_name        = $current_user->first_name;
+$last_name         = $current_user->last_name;
+$display_name      = $current_user->display_name;
+$user_email        = $current_user->user_email;
+$current_url       = esc_url( home_url( $_SERVER['REQUEST_URI'] ) );
+$logout_url        = wp_logout_url( $current_url );
+$registration_date = get_user_registration_date( $current_user->ID );
 
 ?>
 
