@@ -31,8 +31,12 @@ $registration_date = date( 'd M, Y | H:i:s', strtotime( $get_registration_date )
                 }else{
                     $profile_name = $display_name;
                 }
-                printf( '<h2 class="profile-name">%s</h2>', $profile_name );
-                printf( '<span class="registration-name">%s: %s</span>', 'Registration Date', $registration_date );
+                printf( '<h2 class="profile-name">%s</h2>', esc_html( $profile_name ) );
+                printf( 
+                    '<span class="registration-name">%s: %s</span>',
+                    esc_html__( 'Registration Date', 'uni-forum' ),
+                    esc_html( $registration_date )
+                );
                 echo '<div class="link">';
                 printf( '<a href="javascript:void(0)" class="profile-button" id="profile-edit-form-toggle">%s</a>', 'Edit Profile' );
                 printf( '<a href="%1$s" class="profile-button">%2$s</a>', esc_url( $logout_url ), 'Sign Out' );
