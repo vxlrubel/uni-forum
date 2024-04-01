@@ -87,7 +87,11 @@ function is_user_doing_like( int $post_id, int $current_user_id ){
     }
 
     // If not cached, execute the query
-    $result_count = $wpdb->get_var( $query );
+    $result_count = $wpdb->get_var( $wpdb->prepare(
+        "SELECT COUNT(*) FROM {$table} WHERE post_id = %d AND user_id = %d",
+        $post_id,
+        $current_user_id
+    ) );
 
     // Cache the result
     wp_cache_set( $cache_key, $result_count, 'uf_likes_cache' );
