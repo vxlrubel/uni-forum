@@ -198,7 +198,7 @@
 
         if( version_compare( $wp_version, $min_required_version, '<' ) ){
             $notice = sprintf(
-                __( 'Uni Forum plugin requires WordPress version %1$s or higher to function properly. Please <a href="%2$s">update WordPress</a>.', 'uni-forum' ),
+                'Uni Forum plugin requires WordPress version %1$s or higher to function properly. Please <a href="%2$s">update WordPress</a>.',
                 esc_html( $min_required_version ),
                 esc_url (admin_url( 'update-core.php' ) )
             );
