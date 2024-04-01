@@ -44,9 +44,21 @@ function uf_profile_name( int $author_id ){
  */
 function get_row_count( int $post_id ){
     global $wpdb;
-    $table = $wpdb->prefix . 'uf_likes';
-    $count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE post_id = %d", $post_id ) );
-    return $count;
+    $table     = $wpdb->prefix . 'uf_likes';
+    $sql       = $wpdb->prepare( "SELECT COUNT(*) FROM {$table} WHERE post_id = %d", $post_id );
+    $cache_key = md5( $sql );
+
+    $cached_result = wp_cache_get( $cache_key, 'uf_likes_row_count' );
+    
+    if ( false !== $cached_result ) {
+        return $cached_result;
+    }
+
+    $result_count = $wpdb->get_var( $sql );
+
+    wp_cache_set( $cache_key, $result_count, 'uf_likes_row_count' );
+
+    return $result_count;
 }
 
 /**
