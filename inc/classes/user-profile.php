@@ -17,7 +17,9 @@ $get_registration_date = $wpdb->get_var( $wpdb->prepare(
     $current_user->ID
 ) );
 
-$registration_date = date( 'd M, Y | H:i:s', strtotime( $get_registration_date ) );
+// Convert the registration date to UTC
+$registration_date = gmdate( 'd M, Y | H:i:s', strtotime( $get_registration_date ) );
+
 
 ?>
 
