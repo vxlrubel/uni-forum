@@ -54,7 +54,7 @@ function get_row_count( int $post_id ){
         return $cached_result;
     }
 
-    $result_count = $wpdb->get_var( $sql );
+    $result_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$table} WHERE post_id = %d", $post_id ) );
 
     wp_cache_set( $cache_key, $result_count, 'uf_likes_row_count' );
 
