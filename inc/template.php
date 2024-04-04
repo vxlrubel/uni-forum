@@ -68,37 +68,16 @@ function get_row_count( int $post_id ){
  */
 function is_user_doing_like( int $post_id, int $current_user_id ){
     global $wpdb;
-    $table = $wpdb->prefix . 'uf_likes';
+    $table  = $wpdb->prefix . 'uf_likes';
+    $sql    = $wpdb->prepare( "SELECT * FROM $table WHERE post_id = %d AND user_id = %d", $post_id, $current_user_id );
+    $result = $wpdb->get_results( $sql );
 
-    // Prepare the query with placeholders
-    $query = $wpdb->prepare(
-        "SELECT COUNT(*) FROM {$table} WHERE post_id = %d AND user_id = %d",
-        $post_id,
-        $current_user_id
-    );
+    $text = 'like';
 
-    // Check if the query result is cached
-    $cache_key = md5( $query );
-    $cached_result = wp_cache_get( $cache_key, 'uf_likes_cache' );
-
-    // If cached result exists, return it
-    if ( false !== $cached_result ) {
-        return $cached_result;
+    if( count( $result ) == 1 ){
+        $text = 'liked';
     }
-
-    // If not cached, execute the query
-    $result_count = $wpdb->get_var( $wpdb->prepare(
-        "SELECT COUNT(*) FROM {$table} WHERE post_id = %d AND user_id = %d",
-        $post_id,
-        $current_user_id
-    ) );
-
-    // Cache the result
-    wp_cache_set( $cache_key, $result_count, 'uf_likes_cache' );
-
-    // Determine the text based on the count
-    $text = ($result_count == 1) ? 'liked' : 'like';
-
+    
     return $text;
 } 
 
