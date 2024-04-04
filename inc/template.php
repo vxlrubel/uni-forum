@@ -68,11 +68,9 @@ function get_row_count( int $post_id ){
  */
 function is_user_doing_like( int $post_id, int $current_user_id ){
     global $wpdb;
-    $table  = $wpdb->prefix . 'uf_likes';
-    $sql    = $wpdb->prepare( "SELECT * FROM $table WHERE post_id = %d AND user_id = %d", $post_id, $current_user_id );
-    $result = $wpdb->get_results( $sql );
-
-    $text = 'like';
+    $table  = (string) $wpdb->prefix . 'uf_likes';
+    $result = $wpdb->get_results( $wpdb->prepare("SELECT * FROM `$table` WHERE post_id = %d AND user_id = %d", $post_id, $current_user_id) );
+    $text   = 'like';
 
     if( count( $result ) == 1 ){
         $text = 'liked';
