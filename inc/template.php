@@ -169,11 +169,12 @@ function uf_get_forum_posts( int $author_id = null ){
             'prev_text' => '«',
             'next_text' => '»',
         ];
+        
         $pagination  = '<li class="pagination">';
         $pagination .= paginate_links( $paginate_args );
         $pagination .= '</li>';
-
-        echo esc_html( $pagination );
+        
+        echo wp_kses_post( $pagination );
 
         wp_reset_postdata();
 
