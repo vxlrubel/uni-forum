@@ -320,7 +320,10 @@
             <p class="text-uf-default">${excerpt}</p>
             <a href="${url}" class="permalink">Read More</a>
             <div class="forum-footer">
-                <button type="button" class="button like">Like</button>
+                <button type="button" class="button button-like like">
+                    <span class="like-count"></span>
+                    <span class="like-text text-capitalize">like</span>
+                </button>
                 <button type="button" class="button comment">No comments</button>
             </div>
         </li>
